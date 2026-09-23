@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IFPI Pedagogia Barras 2027</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{
+  min-height:100vh;min-height:100dvh;
+  font-family:Arial,sans-serif;
+  background:#f4f7fb;color:#172033;
+  display:flex;flex-direction:column;
+}
+header{
+  background:linear-gradient(135deg,#183b72,#2867b2);
+  color:#fff;text-align:center;
+  padding:calc(28px + env(safe-area-inset-top)) 20px 32px;
+}
+header h1{font-size:clamp(22px,6vw,32px);line-height:1.25;margin:8px 0}
+header p{opacity:.92;font-size:15px;margin-top:8px}
+main{
+  width:100%;max-width:420px;margin:0 auto;
+  padding:22px 16px calc(24px + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;gap:14px;flex:1;
+}
+a.btn{
+  display:flex;flex-direction:column;justify-content:center;
+  min-height:96px;padding:20px 18px;border-radius:16px;
+  text-decoration:none;color:#fff;
+  -webkit-tap-highlight-color:transparent;
+}
+a.btn span.kicker{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+a.btn span.title{font-size:22px;font-weight:800;margin-top:4px}
+a.btn span.desc{font-size:14px;margin-top:6px;opacity:.9;line-height:1.4}
+.plano{background:#fff;color:#183b72;box-shadow:0 4px 16px #00000012;border:1px solid #dbe7f5}
+.plano .kicker{color:#2867b2}
+.plano .desc{color:#667085;opacity:1}
+.questoes{background:#2867b2;box-shadow:0 4px 16px #183b7233}
+footer{text-align:center;padding:8px 16px 20px;color:#667085;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <p style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;opacity:.85">IFPI · Pedagogia Barras</p>
+  <h1>Estudos 2027</h1>
+  <p>Prova: 29/11/2026 · 70 questões + redação</p>
+</header>
+<main>
+  <a class="btn plano" href="plano.html">
+    <span class="kicker">Cronograma</span>
+    <span class="title">Plano de Estudos</span>
+    <span class="desc">Ver o conteúdo de hoje e da semana</span>
+  </a>
+  <a class="btn questoes" href="questoes.html">
+    <span class="kicker">Prática</span>
+    <span class="title">Treino de Questões</span>
+    <span class="desc">Responder questões do dia, da semana ou simulado</span>
+  </a>
+</main>
+<footer>IFPI Pedagogia Barras 2027</footer>
+</body>
+</html>

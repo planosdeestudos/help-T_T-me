@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Treino de Questões — IFPI Pedagogia Barras 2027</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#183b72;--primary2:#2867b2;--bg:#f4f7fb;--card:#fff;--text:#172033;
+  --muted:#667085;--success:#2e7d32;--error:#c62828;--warn:#e6a817;
+  --border:#e2e8f0;--light:#eef6ff;--radius:14px;--shadow:0 3px 14px #00000012;
+}
+body.dark{
+  --bg:#0f172a;--card:#1e293b;--text:#e2e8f0;--muted:#94a3b8;--border:#334155;
+  --light:#1e3a5f;--shadow:0 3px 14px #00000040;
+}
+html,body{max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;min-height:100vh;min-height:100dvh;padding-bottom:env(safe-area-inset-bottom)}
+header{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;padding:calc(16px + env(safe-area-inset-top)) 16px 18px;text-align:center;position:relative}
+header h1{margin:0 40px 6px;font-size:clamp(16px,4.6vw,26px);line-height:1.25}
+header p{margin:3px 0;font-size:14px;opacity:.95}
+.header-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px 16px;min-height:44px;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:.2s;text-decoration:none;color:#fff;background:var(--primary2);-webkit-tap-highlight-color:transparent}
+.btn:hover{opacity:.9;transform:translateY(-1px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-outline{background:transparent;border:2px solid #fff;color:#fff}
+.btn-success{background:var(--success)}
+.btn-error{background:var(--error)}
+.btn-warn{background:var(--warn);color:#1a1a1a}
+.btn-secondary{background:#64748b}
+.btn-sm{padding:10px 12px;font-size:13px;min-height:44px}
+.btn-lg{padding:14px 22px;font-size:16px;min-height:48px;width:100%;max-width:420px}
+.container{max-width:960px;margin:auto;padding:12px}
+.card{background:var(--card);border-radius:var(--radius);padding:18px;margin:14px 0;box-shadow:var(--shadow)}
+.card h2{font-size:18px;margin-bottom:10px;color:var(--primary)}
+.badge{display:inline-block;background:var(--primary2);color:#fff;border-radius:20px;padding:4px 12px;font-size:12px;font-weight:bold}
+.badge-green{background:var(--success)}
+.badge-red{background:var(--error)}
+.badge-yellow{background:var(--warn);color:#1a1a1a}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,148px),1fr));gap:8px;margin:12px 0}
+.info-item{background:var(--light);border-radius:10px;padding:12px;text-align:center}
+.info-item .label{font-size:12px;color:var(--muted);margin-bottom:4px}
+.info-item .value{font-size:20px;font-weight:bold;color:var(--primary)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.tab{padding:10px 12px;min-height:44px;border-radius:12px;border:2px solid var(--border);background:var(--card);cursor:pointer;font-size:13px;font-weight:600;color:var(--text);flex:1 1 calc(50% - 8px);text-align:center;-webkit-tap-highlight-color:transparent}
+.tab.active{background:var(--primary2);color:#fff;border-color:var(--primary2)}
+.mode-panel,.setup-panel{display:none}
+.mode-panel.active,.setup-panel.active{display:block}
+select,input[type="number"],input[type="text"]{width:100%;padding:12px 12px;min-height:44px;border:2px solid var(--border);border-radius:8px;font-size:16px;background:var(--card);color:var(--text);margin:6px 0}
+label{font-size:13px;font-weight:600;display:block;margin-top:8px}
+.questao-box{display:none}
+.questao-box.active{display:block}
+.enunciado{font-size:16px;margin:14px 0;line-height:1.6;padding:14px;background:var(--light);border-radius:10px;overflow-wrap:anywhere;word-break:break-word}
+.alternativas{list-style:none;margin:12px 0}
+.alternativas li{margin:8px 0}
+.alt-btn{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;padding:14px;min-height:48px;border:2px solid var(--border);border-radius:10px;background:var(--card);cursor:pointer;font-size:15px;color:var(--text);transition:.15s;-webkit-tap-highlight-color:transparent}
+.alt-btn:hover:not(.disabled){border-color:var(--primary2);background:var(--light)}
+.alt-btn.selected{border-color:var(--primary2);background:#dbeafe}
+.alt-btn.correct{border-color:var(--success);background:#e8f5e9}
+.alt-btn.incorrect{border-color:var(--error);background:#ffebee}
+.alt-btn.disabled{cursor:default;opacity:.85}
+.alt-letter{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--primary2);color:#fff;font-weight:bold;font-size:13px;flex-shrink:0}
+.alt-btn.correct .alt-letter{background:var(--success)}
+.alt-btn.incorrect .alt-letter{background:var(--error)}
+.feedback{margin:14px 0;padding:14px;border-radius:10px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:#e8f5e9;border-left:5px solid var(--success)}
+.feedback.err{background:#ffebee;border-left:5px solid var(--error)}
+.explicacao{margin-top:10px;font-size:14px;line-height:1.55}
+.progress-bar-wrap{height:10px;background:var(--border);border-radius:6px;overflow:hidden;margin:12px 0}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--primary2),#4caf50);width:0%;transition:width .3s}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0;justify-content:center}
+.meta-row{display:flex;flex-wrap:wrap;gap:6px;font-size:12px;color:var(--muted);margin-bottom:8px}
+.meta-row span{background:var(--light);padding:4px 8px;border-radius:6px;max-width:100%;overflow-wrap:anywhere}
+.resultado-final{text-align:center;padding:20px}
+.resultado-final .nota{font-size:48px;font-weight:bold;color:var(--primary);margin:10px 0}
+.resultado-final .msg{font-size:16px;margin:10px 0}
+.chart-bar{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:13px;min-width:0}
+.chart-bar .name{width:88px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chart-bar .bar-bg{flex:1;height:18px;background:var(--border);border-radius:4px;overflow:hidden}
+.chart-bar .bar-fill{height:100%;background:var(--primary2);border-radius:4px;min-width:2px}
+.chart-bar .pct{width:42px;text-align:right;font-weight:600}
+.erro-item{border:1px solid var(--border);border-radius:10px;padding:12px;margin:10px 0;background:var(--card)}
+.erro-item .erro-meta{font-size:12px;color:var(--muted);margin-bottom:6px}
+.erro-item .erro-enun{font-size:14px;margin:6px 0}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.filters select{width:100%;min-width:0}
+.hidden{display:none!important}
+.note{background:#fff8e6;border-left:4px solid var(--warn);padding:12px 14px;border-radius:8px;margin:12px 0;font-size:14px;color:#172033}
+body.dark .note{background:#3d3420;color:#fef3c7}
+.empty-msg{text-align:center;padding:30px 16px;color:var(--muted);font-size:15px}
+.timer{font-variant-numeric:tabular-nums;font-weight:600;color:var(--primary)}
+footer{text-align:center;padding:20px;color:var(--muted);font-size:12px}
+.theme-toggle{position:absolute;top:calc(10px + env(safe-area-inset-top));right:10px;background:rgba(255,255,255,.2);border:none;color:#fff;width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:18px}
+@media(max-width:720px){
+  .container{padding:10px}
+  .card{padding:14px;margin:10px 0;border-radius:12px}
+  .info-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .info-item .label{font-size:11px;line-height:1.3}
+  .info-item .value{font-size:18px}
+  header p{font-size:13px}
+  .header-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .header-actions .btn{width:100%}
+  .tab{flex:1 1 calc(50% - 8px);font-size:12px;padding:10px 8px}
+  #tabsQtd .tab{flex:1 1 calc(33.33% - 8px)}
+  .alt-btn{padding:12px;font-size:14px}
+  .btn-lg{width:100%;max-width:none}
+  .questao-box .actions{
+    position:sticky;bottom:0;z-index:6;
+    background:var(--card);
+    padding:10px 0 calc(10px + env(safe-area-inset-bottom));
+    margin:12px 0 0;
+    box-shadow:0 -8px 16px #00000010;
+  }
+  .questao-box .actions .btn{flex:1 1 calc(50% - 8px)}
+  .questao-box .actions #btnResponder,
+  .questao-box .actions #btnProxima{flex:1 1 100%}
+  .resultado-final{padding:8px}
+  .resultado-final .nota{font-size:36px}
+  .chart-bar{flex-wrap:wrap}
+  .chart-bar .name{width:100%;white-space:normal}
+  .chart-bar .bar-bg{flex:1 1 auto;min-width:0}
+  footer{padding:16px 12px calc(16px + env(safe-area-inset-bottom))}
+}
+@media(max-width:380px){
+  .info-grid{grid-template-columns:1fr 1fr;gap:6px}
+  .tab{flex:1 1 100%}
+  #tabsQtd .tab{flex:1 1 calc(50% - 8px)}
+}
+
+</style>
+</head>
+<body>
+<header>
+  <button class="theme-toggle" id="themeToggle" title="Modo claro/escuro">🌙</button>
+  <h1>Treino de Questões — IFPI Pedagogia Barras 2027</h1>
+  <p id="headerDate">Carregando...</p>
+  <p id="headerWeek"></p>
+  <div class="header-actions">
+    <a class="btn btn-outline btn-sm" href="index.html">Início</a>
+    <a class="btn btn-outline btn-sm" href="plano.html" id="linkPlano">Plano de Estudos</a>
+    <button class="btn btn-outline btn-sm" id="btnPainel">Desempenho</button>
+    <button class="btn btn-outline btn-sm" id="btnCaderno">Caderno de Erros</button>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- PAINEL INFO DO DIA -->
+  <section class="card" id="painelInfo">
+    <span class="badge" id="badgeDia">HOJE</span>
+    <h2 id="tituloDia" style="margin-top:8px">—</h2>
+    <p id="descDia" style="font-size:14px;color:var(--muted)"></p>
+    <div class="info-grid" id="infoGrid">
+      <div class="info-item"><div class="label">Questões disponíveis</div><div class="value" id="statDisp">0</div></div>
+      <div class="info-item"><div class="label">Respondidas (sessão)</div><div class="value" id="statResp">0</div></div>
+      <div class="info-item"><div class="label">Acertos</div><div class="value" id="statAcerto" style="color:var(--success)">0</div></div>
+      <div class="info-item"><div class="label">Erros</div><div class="value" id="statErro" style="color:var(--error)">0</div></div>
+      <div class="info-item"><div class="label">Aproveitamento</div><div class="value" id="statPct">—</div></div>
+      <div class="info-item"><div class="label">Tempo</div><div class="value timer" id="statTempo">00:00</div></div>
+    </div>
+    <div id="topicosDoDia" style="margin-top:10px;font-size:14px"></div>
+  </section>
+
+  <!-- ABAS DE MODO -->
+  <section class="card" id="secModos">
+    <h2>Modo de treino</h2>
+    <div class="tabs" id="tabsModo">
+      <button class="tab active" data-mode="dia">Questões do dia</button>
+      <button class="tab" data-mode="semana">Questões da semana</button>
+      <button class="tab" data-mode="disciplina">Por disciplina</button>
+      <button class="tab" data-mode="topico">Por tópico</button>
+      <button class="tab" data-mode="erros">Revisão de erros</button>
+      <button class="tab" data-mode="simulado">Simulado</button>
+    </div>
+
+    <div class="setup-panel active" id="setupDia">
+      <p style="font-size:14px;margin:8px 0">Questões apenas dos tópicos previstos para <strong id="setupDiaNome">hoje</strong>.</p>
+    </div>
+    <div class="setup-panel" id="setupSemana">
+      <p style="font-size:14px;margin:8px 0">Todos os tópicos da semana atual do ciclo.</p>
+    </div>
+    <div class="setup-panel" id="setupDisciplina">
+      <label>Disciplina</label>
+      <select id="selDisciplina"></select>
+    </div>
+    <div class="setup-panel" id="setupTopico">
+      <label>Disciplina</label>
+      <select id="selTopicoDisc"></select>
+      <label>Tópico</label>
+      <select id="selTopico"></select>
+    </div>
+    <div class="setup-panel" id="setupErros">
+      <p style="font-size:14px;margin:8px 0">Refazer apenas as questões que você errou (e ainda não marcou como revisadas).</p>
+    </div>
+    <div class="setup-panel" id="setupSimulado">
+      <p style="font-size:14px;margin:8px 0" id="simuladoDesc">Mistura de disciplinas da semana, com progressão conforme o plano.</p>
+    </div>
+
+    <label style="margin-top:14px">Quantidade de questões</label>
+    <div class="tabs" id="tabsQtd">
+      <button class="tab active" data-qtd="5">5</button>
+      <button class="tab" data-qtd="10">10</button>
+      <button class="tab" data-qtd="15">15</button>
+      <button class="tab" data-qtd="20">20</button>
+      <button class="tab" data-qtd="30">30</button>
+      <button class="tab" data-qtd="custom">Personalizado</button>
+    </div>
+    <div id="qtdCustomWrap" class="hidden">
+      <input type="number" id="qtdCustom" min="1" max="70" value="25" placeholder="Nº de questões">
+    </div>
+
+    <div class="actions" style="margin-top:16px">
+      <button class="btn btn-lg" id="btnIniciar">▶ Iniciar treino</button>
+    </div>
+    <p id="msgSemQuestoes" class="empty-msg hidden">Nenhuma questão cadastrada para os tópicos selecionados. O banco precisa ser ampliado para esses assuntos.</p>
+  </section>
+
+  <!-- ÁREA DA QUESTÃO -->
+  <section class="card questao-box" id="areaQuestao">
+    <div class="meta-row">
+      <span id="qNum">Questão 1/10</span>
+      <span id="qDisc"></span>
+      <span id="qTopico"></span>
+      <span id="qNivel"></span>
+      <span class="timer" id="qTimer">00:00</span>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="qProgress"></div></div>
+    <div class="enunciado" id="qEnunciado"></div>
+    <ul class="alternativas" id="qAlts"></ul>
+    <div class="feedback" id="qFeedback">
+      <strong id="qFeedbackTitulo"></strong>
+      <div class="explicacao" id="qExplicacao"></div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-secondary btn-sm" id="btnAnterior">◀ Anterior</button>
+      <button class="btn btn-warn btn-sm" id="btnPular">Pular</button>
+      <button class="btn btn-lg" id="btnResponder">Responder</button>
+      <button class="btn btn-secondary btn-sm hidden" id="btnVerExplicacao">Ver explicação</button>
+      <button class="btn btn-success btn-sm hidden" id="btnProxima">Próxima ▶</button>
+    </div>
+  </section>
+
+  <!-- RESULTADO DA SESSÃO -->
+  <section class="card hidden" id="areaResultado">
+    <div class="resultado-final">
+      <h2>Sessão finalizada</h2>
+      <div class="nota" id="resNota">0,0</div>
+      <p id="resMsg" class="msg"></p>
+      <div class="info-grid" style="margin:16px 0">
+        <div class="info-item"><div class="label">Total</div><div class="value" id="resTotal">0</div></div>
+        <div class="info-item"><div class="label">Acertos</div><div class="value" style="color:var(--success)" id="resAcertos">0</div></div>
+        <div class="info-item"><div class="label">Erros</div><div class="value" style="color:var(--error)" id="resErros">0</div></div>
+        <div class="info-item"><div class="label">Aproveitamento</div><div class="value" id="resPct">0%</div></div>
+        <div class="info-item"><div class="label">Tempo</div><div class="value" id="resTempo">00:00</div></div>
+      </div>
+      <div id="resPorDisc" style="text-align:left;margin:16px 0"></div>
+      <div class="actions">
+        <button class="btn" id="btnNovaSessao">Nova sessão</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAINEL DESEMPENHO -->
+  <section class="card hidden" id="areaDesempenho">
+    <h2>📊 Painel de Desempenho</h2>
+    <div class="info-grid">
+      <div class="info-item"><div class="label">Total respondidas</div><div class="value" id="perfTotal">0</div></div>
+      <div class="info-item"><div class="label">Acertos gerais</div><div class="value" style="color:var(--success)" id="perfAcertos">0</div></div>
+      <div class="info-item"><div class="label">Aproveitamento</div><div class="value" id="perfPct">—</div></div>
+      <div class="info-item"><div class="label">Sessões</div><div class="value" id="perfSessoes">0</div></div>
+    </div>
+    <h3 style="margin:16px 0 8px;font-size:15px">Por disciplina</h3>
+    <div id="chartDisc"></div>
+    <h3 style="margin:16px 0 8px;font-size:15px">Tópicos com mais erros</h3>
+    <div id="chartErrosTopicos"></div>
+    <h3 style="margin:16px 0 8px;font-size:15px">Últimas sessões</h3>
+    <div id="listaSessoes" style="font-size:13px"></div>
+    <div class="actions" style="margin-top:16px">
+      <button class="btn btn-secondary btn-sm" id="btnLimparHist">🗑 Limpar histórico local</button>
+      <button class="btn btn-sm" id="btnFecharPerf">Fechar</button>
+    </div>
+  </section>
+
+  <!-- CADERNO DE ERROS -->
+  <section class="card hidden" id="areaCaderno">
+    <h2>📕 Caderno de Erros</h2>
+    <div class="filters">
+      <select id="filtroErroDisc"><option value="">Todas disciplinas</option></select>
+      <select id="filtroErroTopico"><option value="">Todos tópicos</option></select>
+      <button class="btn btn-sm" id="btnFiltrarErros">Filtrar</button>
+    </div>
+    <div id="listaErros"></div>
+    <div class="actions">
+      <button class="btn" id="btnRefazerErros">Refazer erros filtrados</button>
+      <button class="btn btn-sm" id="btnFecharCaderno">Fechar</button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  IFPI Pedagogia Barras 2027 — Treino de Questões · Ciclo de 7 semanas · Dados salvos localmente no navegador
+</footer>
+
+<script>
+/* ============================================================
+   DADOS DO PLANO DE ESTUDOS (mesma referência do plano original)
+   Ref: 21/09/2026 = segunda-feira = semana 0 do ciclo
+   ============================================================ */
+const topicosFilosofia = [
+  "Introdução ao conhecimento filosófico",
+  "Desenvolvimento da Filosofia na Grécia Antiga",
+  "Principais escolas de pensamento gregas",
+  "História da Filosofia",
+  "Desenvolvimento da racionalidade humana",
+  "Ética e teorias éticas",
+  "Filosofia política",
+  "Direitos humanos",
+  "Teorias políticas",
+  "Teoria do conhecimento",
+  "Desenvolvimento do conhecimento científico",
+  "A questão do método",
+  "Ciência, sociedade e valores"
+];
+const gruposPorSemana = [[0,1],[2,3],[4,5],[6,7],[8,9],[10,11],[12]];
+
+const portPorSemana = [
+  ["Interpretação e compreensão de textos","Ideias principais e secundárias","Gêneros textuais"],
+  ["Intertextualidade","Semântica","Classes de palavras (substantivo, adjetivo, verbo)"],
+  ["Morfologia","Sintaxe (sujeito, predicado, complementos)","Coordenação e subordinação"],
+  ["Colocação pronominal","Concordância verbal e nominal","Regência verbal e nominal"],
+  ["Crase","Ortografia","Pontuação"],
+  ["Conectores","Coesão e coerência","Texto dissertativo-argumentativo (revisão)"],
+  ["Revisão geral de interpretação + gramática","Prática de questões mistas","Correção de erros frequentes"]
+];
+const litPorSemana = [
+  ["Conceitos de literatura","Gêneros literários","Trovadorismo e Humanismo"],
+  ["Classicismo","Quinhentismo / Literatura de informação e jesuítica","Arcadismo"],
+  ["Romantismo","Realismo","Naturalismo"],
+  ["Parnasianismo","Simbolismo","Pré-Modernismo"],
+  ["Modernismo e Semana de Arte Moderna","1ª geração modernista","2ª geração modernista"],
+  ["Geração de 45","Literatura contemporânea","Literatura piauiense (visão geral)"],
+  ["Revisão das escolas literárias","Leitura dirigida das obras obrigatórias","Questões de literatura"]
+];
+const matPorSemana = [
+  ["Razão e proporção","Unidades de medida","Porcentagem"],
+  ["Divisão proporcional","Regra de três simples e composta","Ordem de grandeza e notação científica"],
+  ["Juros simples e compostos","Taxas e índices","Progressão Aritmética (PA)"],
+  ["Progressão Geométrica (PG)","Função de 1º grau","Função de 2º grau"],
+  ["Função definida por partes","Função exponencial e logarítmica","Estatística descritiva"],
+  ["Análise combinatória","Probabilidade","Geometria plana (áreas e perímetros)"],
+  ["Geometria espacial","Geometria analítica e sistemas","Trigonometria básica + revisão"]
+];
+const fisPorSemana = [
+  ["Grandezas e unidades / Sistema Internacional","Cinemática (MRU e MRUV)"],
+  ["Dinâmica e Leis de Newton","Força, massa e aceleração"],
+  ["Hidrostática","Trabalho e energia"],
+  ["Termodinâmica (calor e temperatura)","Ondas"],
+  ["Óptica","Eletricidade (circuitos básicos)"],
+  ["Eletromagnetismo (noções)","Revisão de cinemática e dinâmica"],
+  ["Revisão geral de Física + questões mistas"]
+];
+const histPorSemana = [
+  ["Pré-História e Antiguidade","Civilizações antigas","Feudalismo"],
+  ["Islamismo","Renascimento","Absolutismo e Reformas religiosas"],
+  ["África e Ásia","Expansão marítima","América e Brasil Colônia"],
+  ["Povos indígenas e africanos na América","Iluminismo","Revolução Industrial e Francesa"],
+  ["Independências e Brasil Império","Primeira República","1ª e 2ª Guerras Mundiais + Crise de 1929"],
+  ["Era Vargas","Guerra Fria e Ditadura Militar","Redemocratização e Nova República"],
+  ["Brasil no século XXI","História do Piauí (primeiros vestígios, colônia, independência, República)","Revisão"]
+];
+const geoPorSemana = [
+  ["Espaço geográfico e cartografia","Sociedade e natureza","Atividades produtivas"],
+  ["Industrialização e urbanização","Ruralidades e energia","Meio ambiente"],
+  ["Globalização e geopolítica","Blocos econômicos e organizações internacionais","Conflitos étnicos/nacionalistas"],
+  ["População e migrações","Geografia do Piauí: geologia, relevo, clima","Hidrografia e vegetação do Piauí"],
+  ["Questões ambientais do Piauí","Estrutura agrária e produção","Territórios tradicionais, quilombolas e indígenas"],
+  ["Políticas públicas e dinâmica socioeconômica","Grãos, serviços e turismo","Cidades do Piauí"],
+  ["Revisão de Geografia Geral + Piauí","Questões mistas"]
+];
+const bioPorSemana = [
+  ["Origem da vida e seres vivos","Bases moleculares da vida","Citologia"],
+  ["Histologia","Anatomofisiologia e reprodução","Anatomia humana básica"],
+  ["Genética","Reino animal","Evolução"],
+  ["Saúde e vírus","Ecologia (cadeias e teias)","Relações ecológicas"],
+  ["Biodiversidade e biomas","Impactos ambientais","Revisão de citologia e genética"],
+  ["Revisão de evolução e ecologia","Questões de Biologia"],
+  ["Revisão geral de Biologia"]
+];
+const quiPorSemana = [
+  ["Conceitos fundamentais e propriedades da matéria","Modelos atômicos","Tabela periódica"],
+  ["Ligações químicas","Reações químicas","Funções inorgânicas"],
+  ["Leis químicas e cálculos","Estequiometria","Gases e soluções"],
+  ["Propriedades coligativas","Termoquímica e cinética","Equilíbrio químico"],
+  ["Eletroquímica e radioatividade","Química orgânica (introdução)","Isomeria e estereoquímica"],
+  ["Reações orgânicas e polímeros","Compostos orgânicos biológicos","Revisão"],
+  ["Revisão geral de Química + questões"]
+];
+const socPorSemana = [
+  ["Surgimento da Sociologia","Tipos de conhecimento","Métodos de pesquisa"],
+  ["Cultura","Indivíduo e sociedade","Sociedade de consumo"],
+  ["Sustentabilidade e indústria cultural","Meio ambiente e racismo ambiental","Estado e neoliberalismo"],
+  ["Globalização e trabalho","Desigualdades e movimentos sociais","Capitalismo e cidadania"],
+  ["Violência e políticas afirmativas","Formação social, econômica e cultural do Brasil","Sistema político e eleitoral"],
+  ["Estado e governo","Revisão de cultura e desigualdades","Questões de Sociologia"],
+  ["Revisão geral de Sociologia"]
+];
+const artesEfPorSemana = [
+  ["Conceitos de arte e arte e sociedade","Esportes e práticas de aventura"],
+  ["Linguagens artísticas e leitura visual","Jogos e ginástica"],
+  ["História da arte e estética","Dança e lutas"],
+  ["Diversidade e técnicas/tecnologia","Saúde e exercício físico"],
+  ["Identidade e análise de objetos artísticos","Patologias e desempenho"],
+  ["Revisão de artes","Políticas públicas e padrões de beleza/diversidade"],
+  ["Revisão leve de Artes + Educação Física"]
+];
+const simuladoPorSemana = [
+  "20–30 questões (mistura de disciplinas da semana) + 1 redação (se possível)",
+  "25–35 questões + correção detalhada",
+  "30–40 questões",
+  "40–50 questões",
+  "50–60 questões",
+  "55–65 questões (aproximar do formato real)",
+  "Simulado completo ou quase completo (próximo de 70 questões) + redação"
+];
+const simuladoQtdSugerida = [25, 30, 35, 45, 55, 60, 65];
+
+const disciplinasDia = {
+  0: [], // domingo
+  1: ["Português", "Literatura"],
+  2: ["Matemática", "Física"],
+  3: ["História", "Geografia"],
+  4: ["Biologia", "Química"],
+  5: ["Filosofia", "Sociologia", "Língua Estrangeira", "Artes", "Educação Física"],
+  6: [] // sábado = simulado
+};
+
+const nomesDias = ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
+const titulosDia = {
+  0: "Domingo — Descanso + Revisão leve",
+  1: "Segunda-feira — Português + Redação + Literatura",
+  2: "Terça-feira — Matemática + Física",
+  3: "Quarta-feira — História + Geografia",
+  4: "Quinta-feira — Biologia + Química",
+  5: "Sexta-feira — Filosofia + Sociologia + LE + Artes/EF",
+  6: "Sábado — Simulado + Correção + Redação"
+};
+
+/* ============================================================
+   BANCO DE QUESTÕES (id, disciplina, topico, nivel, enunciado, alts, correta 0-4, explicacao)
+   ============================================================ */
+const BANCO = [
+  /* ---- HISTÓRIA semana 0 ---- */
+  {id:"h01",disc:"História",topico:"Pré-História e Antiguidade",nivel:"Fácil",
+   enunciado:"A Pré-História é tradicionalmente dividida em períodos com base no desenvolvimento tecnológico dos grupos humanos. Qual período é caracterizado pelo uso de ferramentas de pedra lascada e pela economia de caça e coleta?",
+   alts:["Neolítico","Idade dos Metais","Paleolítico","Idade do Bronze","Mesolítico avançado"],
+   correta:2,
+   explicacao:"O Paleolítico (Idade da Pedra Lascada) é marcado por ferramentas de pedra lascada e modo de vida baseado em caça, pesca e coleta. O Neolítico já apresenta agricultura e polimento da pedra."},
+  {id:"h02",disc:"História",topico:"Pré-História e Antiguidade",nivel:"Médio",
+   enunciado:"A Revolução Neolítica representou uma mudança fundamental na história humana. Qual foi sua principal consequência?",
+   alts:["Início da escrita cuneiforme","Sedentarização e surgimento da agricultura","Descoberta do fogo","Formação dos primeiros impérios militares","Início do comércio marítimo internacional"],
+   correta:1,
+   explicacao:"A Revolução Neolítica (ou agrícola) trouxe o cultivo de plantas e a domesticação de animais, permitindo a sedentarização e o crescimento de aldeias e, depois, cidades."},
+  {id:"h03",disc:"História",topico:"Civilizações antigas",nivel:"Fácil",
+   enunciado:"Qual civilização antiga desenvolveu-se ao longo do rio Nilo e é conhecida por suas pirâmides e escrita hieroglífica?",
+   alts:["Mesopotâmia","Egito","Fenícia","Grécia","Pérsia"],
+   correta:1,
+   explicacao:"O Egito Antigo se desenvolveu no vale do Nilo. Suas construções monumentais (pirâmides) e a escrita hieroglífica são marcas características."},
+  {id:"h04",disc:"História",topico:"Civilizações antigas",nivel:"Médio",
+   enunciado:"Na Mesopotâmia, o Código de Hamurabi é um importante documento histórico. Qual era sua principal característica?",
+   alts:["Era um tratado de paz entre cidades-estado","Compilava leis com o princípio de talião (olho por olho)","Regulava apenas o comércio marítimo","Era um texto religioso sem valor jurídico","Organizava o calendário agrícola"],
+   correta:1,
+   explicacao:"O Código de Hamurabi (Babilônia) é um dos mais antigos conjuntos de leis escritos, baseado no princípio de talião e na estratificação social."},
+  {id:"h05",disc:"História",topico:"Feudalismo",nivel:"Fácil",
+   enunciado:"No sistema feudal europeu medieval, a relação de suserania e vassalagem envolvia principalmente:",
+   alts:["Troca de produtos manufaturados entre cidades","Concessão de terras (feudos) em troca de serviços militares e fidelidade","Pagamento de impostos em dinheiro ao rei","Eleição democrática de senhores locais","Comércio livre sem obrigações pessoais"],
+   correta:1,
+   explicacao:"A suserania/vassalagem era um laço pessoal: o suserano concedia um feudo ao vassalo, que em troca prestava fidelidade e auxílio militar."},
+  {id:"h06",disc:"História",topico:"Feudalismo",nivel:"Médio",
+   enunciado:"A economia feudal era predominantemente:",
+   alts:["Mercantil e urbana","Agrária e de subsistência, com baixa circulação monetária","Industrial e exportadora","Baseada no trabalho assalariado livre","Dependente do comércio com a Ásia"],
+   correta:1,
+   explicacao:"No auge do feudalismo, a economia era rural, de subsistência, com pouca monetarização e forte hierarquia senhorial."},
+
+  /* ---- GEOGRAFIA semana 0 ---- */
+  {id:"g01",disc:"Geografia",topico:"Espaço geográfico e cartografia",nivel:"Fácil",
+   enunciado:"A escala de um mapa indica a relação entre a distância no mapa e a distância real. Em um mapa na escala 1:100.000, 1 cm no mapa corresponde a quantos metros no terreno?",
+   alts:["10 metros","100 metros","1.000 metros","10.000 metros","100.000 metros"],
+   correta:2,
+   explicacao:"Escala 1:100.000 significa que 1 cm no mapa = 100.000 cm no real = 1.000 metros (ou 1 km)."},
+  {id:"g02",disc:"Geografia",topico:"Espaço geográfico e cartografia",nivel:"Médio",
+   enunciado:"As coordenadas geográficas são formadas por:",
+   alts:["Altitude e profundidade","Latitude e longitude","Escala e projeção","Meridianos apenas","Paralelos apenas"],
+   correta:1,
+   explicacao:"Latitude (paralelos, N/S) e longitude (meridianos, E/W) formam o sistema de coordenadas geográficas que localiza qualquer ponto na superfície terrestre."},
+  {id:"g03",disc:"Geografia",topico:"Sociedade e natureza",nivel:"Fácil",
+   enunciado:"A relação sociedade-natureza no espaço geográfico é marcada pela:",
+   alts:["Ausência de intervenção humana","Transformação da natureza pela ação humana e pelas técnicas","Impossibilidade de uso dos recursos naturais","Separação total entre meio ambiente e sociedade","Domínio exclusivo dos fenômenos naturais sobre a sociedade"],
+   correta:1,
+   explicacao:"O espaço geográfico é resultado da interação entre sociedade e natureza, mediada pelo trabalho e pelas técnicas."},
+  {id:"g04",disc:"Geografia",topico:"Atividades produtivas",nivel:"Médio",
+   enunciado:"As atividades econômicas são classificadas em setores. O setor primário inclui principalmente:",
+   alts:["Indústria de transformação","Comércio e serviços","Agricultura, pecuária, extrativismo e pesca","Educação e saúde","Tecnologia da informação"],
+   correta:2,
+   explicacao:"O setor primário reúne atividades de extração e produção de matérias-primas: agropecuária, extrativismo mineral e vegetal, pesca."},
+  {id:"g05",disc:"Geografia",topico:"Espaço geográfico e cartografia",nivel:"Difícil",
+   enunciado:"Uma projeção cartográfica que preserva os ângulos (formas locais) mas distorce as áreas, sendo muito usada em navegação, é a projeção:",
+   alts:["Cilíndrica de Mercator","Azimutal equidistante","Cônica de Albers","Ortográfica","Sinusoidal"],
+   correta:0,
+   explicacao:"A projeção de Mercator é conforme (preserva ângulos), útil para navegação, mas distorce fortemente as áreas nas altas latitudes."},
+
+  /* ---- PORTUGUÊS semana 0 ---- */
+  {id:"p01",disc:"Português",topico:"Interpretação e compreensão de textos",nivel:"Fácil",
+   enunciado:"Em um texto dissertativo, a ideia central que o autor defende costuma ser chamada de:",
+   alts:["Narrativa","Tese","Descrição","Diálogo","Crônica"],
+   correta:1,
+   explicacao:"A tese é a posição ou ideia principal defendida pelo autor em um texto dissertativo-argumentativo."},
+  {id:"p02",disc:"Português",topico:"Ideias principais e secundárias",nivel:"Médio",
+   enunciado:"As ideias secundárias em um parágrafo geralmente:",
+   alts:["Substituem a ideia principal","Desenvolvem, exemplificam ou justificam a ideia principal","Não têm relação com o tema","Aparecem apenas na conclusão","São sempre opiniões pessoais sem base"],
+   correta:1,
+   explicacao:"Ideias secundárias (ou de apoio) complementam a ideia principal com exemplos, dados, argumentos e explicações."},
+  {id:"p03",disc:"Português",topico:"Gêneros textuais",nivel:"Fácil",
+   enunciado:"Qual gênero textual tem como objetivo principal convencer o leitor sobre um ponto de vista, apresentando argumentos?",
+   alts:["Receita culinária","Texto dissertativo-argumentativo","Bula de remédio","Lista de compras","Diário íntimo sem reflexão"],
+   correta:1,
+   explicacao:"O texto dissertativo-argumentativo visa defender uma tese por meio de argumentos, coesão e coerência."},
+
+  /* ---- LITERATURA semana 0 ---- */
+  {id:"l01",disc:"Literatura",topico:"Conceitos de literatura",nivel:"Fácil",
+   enunciado:"A literatura, em sentido amplo, pode ser definida como:",
+   alts:["Apenas textos em verso","Arte da palavra, com função estética e expressiva","Somente obras científicas","Documentos oficiais do Estado","Textos publicitários exclusivos"],
+   correta:1,
+   explicacao:"Literatura é a arte que usa a linguagem verbal com predominância da função estética, produzindo efeitos de sentido e emoção."},
+  {id:"l02",disc:"Literatura",topico:"Gêneros literários",nivel:"Médio",
+   enunciado:"Os três grandes gêneros literários tradicionais são:",
+   alts:["Romance, conto e crônica","Épico (ou narrativo), lírico e dramático","Poesia, prosa e teatro apenas no século XX","Fábula, apólogo e parábola","Ensaio, manifesto e artigo"],
+   correta:1,
+   explicacao:"A classificação clássica (Aristóteles e tradição ocidental) divide a literatura em épico/narrativo, lírico e dramático."},
+  {id:"l03",disc:"Literatura",topico:"Trovadorismo e Humanismo",nivel:"Médio",
+   enunciado:"No Trovadorismo peninsular, as cantigas de amigo caracterizam-se por:",
+   alts:["Serem sempre satíricas e dirigidas a nobres","Apresentarem voz feminina que expressa saudade do amado","Serem textos em latim eclesiástico","Narrarem feitos heroicos de cavaleiros","Criticarem a Igreja de forma sistemática"],
+   correta:1,
+   explicacao:"Nas cantigas de amigo, a voz poética é feminina e fala da ausência/saudade do amigo (amado), em ambiente popular."},
+
+  /* ---- MATEMÁTICA semana 0 ---- */
+  {id:"m01",disc:"Matemática",topico:"Razão e proporção",nivel:"Fácil",
+   enunciado:"A razão entre 12 e 18, simplificada, é igual a:",
+   alts:["2/3","3/2","6/9","12/18","1/2"],
+   correta:0,
+   explicacao:"12/18 = 2/3 após dividir numerador e denominador por 6."},
+  {id:"m02",disc:"Matemática",topico:"Porcentagem",nivel:"Fácil",
+   enunciado:"15% de 200 é igual a:",
+   alts:["15","20","30","40","50"],
+   correta:2,
+   explicacao:"15% de 200 = 0,15 × 200 = 30."},
+  {id:"m03",disc:"Matemática",topico:"Unidades de medida",nivel:"Médio",
+   enunciado:"Quantos metros há em 2,5 km?",
+   alts:["250 m","2.500 m","25.000 m","250.000 m","25 m"],
+   correta:1,
+   explicacao:"1 km = 1.000 m; logo 2,5 km = 2.500 m."},
+  {id:"m04",disc:"Matemática",topico:"Razão e proporção",nivel:"Médio",
+   enunciado:"Se 3 canetas custam R$ 12,00, quanto custam 7 canetas na mesma proporção?",
+   alts:["R$ 24,00","R$ 28,00","R$ 21,00","R$ 36,00","R$ 14,00"],
+   correta:1,
+   explicacao:"Preço unitário = 12/3 = 4. Então 7 × 4 = 28."},
+
+  /* ---- FÍSICA semana 0 ---- */
+  {id:"f01",disc:"Física",topico:"Grandezas e unidades / Sistema Internacional",nivel:"Fácil",
+   enunciado:"No Sistema Internacional (SI), a unidade fundamental de comprimento é o:",
+   alts:["Centímetro","Metro","Quilômetro","Milha","Polegada"],
+   correta:1,
+   explicacao:"A unidade de comprimento no SI é o metro (m)."},
+  {id:"f02",disc:"Física",topico:"Cinemática (MRU e MRUV)",nivel:"Médio",
+   enunciado:"No Movimento Retilíneo Uniforme (MRU), a velocidade é:",
+   alts:["Variável e a aceleração é constante","Constante e a aceleração é nula","Nula e a aceleração é máxima","Aumenta linearmente com o tempo","Depende apenas da massa do corpo"],
+   correta:1,
+   explicacao:"No MRU a velocidade é constante em módulo e direção; a aceleração é zero."},
+  {id:"f03",disc:"Física",topico:"Cinemática (MRU e MRUV)",nivel:"Médio",
+   enunciado:"A equação horária da posição no MRUV (a partir do repouso) é s = s0 + (1/2)at². Se a = 4 m/s² e t = 3 s, o deslocamento a partir de s0 é:",
+   alts:["6 m","12 m","18 m","36 m","9 m"],
+   correta:2,
+   explicacao:"Δs = (1/2)×4×9 = 2×9 = 18 m."},
+
+  /* ---- BIOLOGIA semana 0 ---- */
+  {id:"b01",disc:"Biologia",topico:"Origem da vida e seres vivos",nivel:"Fácil",
+   enunciado:"Segundo a teoria da abiogênese (geração espontânea), a vida:",
+   alts:["Surgiria apenas de outros seres vivos","Poderia surgir espontaneamente da matéria bruta","Surgiria exclusivamente no espaço sideral","Dependeria sempre de DNA pré-existente","Seria criada apenas por intervenção divina, segundo Pasteur"],
+   correta:1,
+   explicacao:"A abiogênese defendia que seres vivos poderiam nascer espontaneamente de matéria inanimada. Foi refutada por experimentos como os de Pasteur."},
+  {id:"b02",disc:"Biologia",topico:"Bases moleculares da vida",nivel:"Médio",
+   enunciado:"As proteínas são polímeros formados por monômeros chamados:",
+   alts:["Monossacarídeos","Ácidos graxos","Aminoácidos","Nucleotídeos","Gliceróis"],
+   correta:2,
+   explicacao:"Proteínas são cadeias de aminoácidos unidos por ligações peptídicas."},
+  {id:"b03",disc:"Biologia",topico:"Citologia",nivel:"Fácil",
+   enunciado:"A estrutura responsável pelo controle das atividades celulares e que contém o material genético na célula eucariótica é:",
+   alts:["Mitocôndria","Ribossomo","Núcleo","Lisossomo","Complexo de Golgi"],
+   correta:2,
+   explicacao:"O núcleo abriga o DNA e controla o metabolismo e a reprodução da célula eucariótica."},
+
+  /* ---- QUÍMICA semana 0 ---- */
+  {id:"q01",disc:"Química",topico:"Conceitos fundamentais e propriedades da matéria",nivel:"Fácil",
+   enunciado:"A mudança de estado em que o líquido passa a gás na temperatura de ebulição é chamada de:",
+   alts:["Fusão","Solidificação","Vaporização (ebulição)","Sublimação","Condensação"],
+   correta:2,
+   explicacao:"Vaporização é a passagem de líquido para vapor; quando ocorre na temperatura de ebulição, chama-se ebulição."},
+  {id:"q02",disc:"Química",topico:"Modelos atômicos",nivel:"Médio",
+   enunciado:"O modelo atômico de Rutherford é conhecido por propor:",
+   alts:["O átomo indivisível como bola de bilhar","Um núcleo positivo pequeno e elétrons em órbita","Órbitas quantizadas de energia fixa","Nuvem eletrônica de probabilidade","Quarks no núcleo"],
+   correta:1,
+   explicacao:"Rutherford, após o experimento da lâmina de ouro, propôs o modelo planetário: núcleo central positivo e elétrons ao redor."},
+  {id:"q03",disc:"Química",topico:"Tabela periódica",nivel:"Fácil",
+   enunciado:"Na tabela periódica atual, os elementos são organizados em ordem crescente de:",
+   alts:["Massa atômica apenas","Número atômico","Densidade","Ponto de fusão","Eletronegatividade decrescente"],
+   correta:1,
+   explicacao:"A lei periódica moderna organiza os elementos por número atômico crescente (número de prótons)."},
+
+  /* ---- FILOSOFIA (tópicos 0 e 1 = semana 0) ---- */
+  {id:"fil01",disc:"Filosofia",topico:"Introdução ao conhecimento filosófico",nivel:"Fácil",
+   enunciado:"A palavra \"filosofia\" tem origem grega e significa, etimologicamente:",
+   alts:["Amor à sabedoria","Ciência dos números","Estudo da natureza apenas","Técnica de persuasão","Religião racional"],
+   correta:0,
+   explicacao:"Philo (amor) + sophia (sabedoria) = amor à sabedoria."},
+  {id:"fil02",disc:"Filosofia",topico:"Introdução ao conhecimento filosófico",nivel:"Médio",
+   enunciado:"Uma característica central do pensamento filosófico é:",
+   alts:["Aceitar dogmas sem questionamento","Buscar fundamentação racional e crítica para as crenças","Restringir-se apenas à experimentação laboratorial","Evitar perguntas sobre valores e ética","Substituir completamente a ciência"],
+   correta:1,
+   explicacao:"A filosofia caracteriza-se pelo questionamento radical e pela busca de fundamentos racionais, sem se limitar a dogmas."},
+  {id:"fil03",disc:"Filosofia",topico:"Desenvolvimento da Filosofia na Grécia Antiga",nivel:"Fácil",
+   enunciado:"Os primeiros filósofos gregos, chamados pré-socráticos, preocupavam-se principalmente com:",
+   alts:["A ética individual de Sócrates","A origem e a natureza do cosmos (arché)","A política da democracia ateniense","A lógica formal de Aristóteles","O cristianismo primitivo"],
+   correta:1,
+   explicacao:"Os pré-socráticos investigavam o princípio (arché) de todas as coisas e a natureza do universo."},
+  {id:"fil04",disc:"Filosofia",topico:"Desenvolvimento da Filosofia na Grécia Antiga",nivel:"Médio",
+   enunciado:"Tales de Mileto é frequentemente citado como um dos primeiros filósofos por ter:",
+   alts:["Fundado a Academia de Platão","Proposto a água como princípio de todas as coisas","Escrito a Ética a Nicômaco","Defendodo o dualismo corpo-alma de forma sistemática","Criado a lógica silogística"],
+   correta:1,
+   explicacao:"Tales buscou um princípio natural (a água) para explicar a realidade, marcando a passagem do mito ao logos."},
+
+  /* ---- SOCIOLOGIA semana 0 ---- */
+  {id:"s01",disc:"Sociologia",topico:"Surgimento da Sociologia",nivel:"Fácil",
+   enunciado:"A Sociologia surgiu como disciplina científica principalmente no século XIX, no contexto de:",
+   alts:["Idade Média feudal","Revoluções Industriais e transformações sociais modernas","Império Romano","Renascimento italiano apenas","Expansão marítima do século XV"],
+   correta:1,
+   explicacao:"A Sociologia nasce no século XIX, ligada às mudanças da Revolução Industrial, urbanização e novas questões sociais."},
+  {id:"s02",disc:"Sociologia",topico:"Tipos de conhecimento",nivel:"Médio",
+   enunciado:"O conhecimento sensível ou empírico cotidiano difere do conhecimento científico principalmente porque o científico:",
+   alts:["É sempre absoluto e definitivo","Busca sistematização, método e verificação","Não usa observação","É baseado apenas em fé","Rejeita qualquer hipótese"],
+   correta:1,
+   explicacao:"O conhecimento científico caracteriza-se por método, sistematização, objetividade e possibilidade de verificação/refutação."},
+  {id:"s03",disc:"Sociologia",topico:"Métodos de pesquisa",nivel:"Médio",
+   enunciado:"Na pesquisa sociológica, a abordagem que privilegia dados quantificáveis, estatísticas e generalizações é chamada de:",
+   alts:["Qualitativa","Quantitativa","Hermeneutica pura","Ensaio literário","Observação participante exclusiva"],
+   correta:1,
+   explicacao:"A pesquisa quantitativa trabalha com números, amostras e análise estatística para identificar padrões."},
+
+  /* ---- ARTES / EF semana 0 ---- */
+  {id:"a01",disc:"Artes",topico:"Conceitos de arte e arte e sociedade",nivel:"Fácil",
+   enunciado:"A arte, enquanto produção humana, relaciona-se com a sociedade porque:",
+   alts:["É totalmente independente de contexto histórico","Reflete, questiona e dialoga com valores, ideologias e experiências coletivas","Serve apenas para decoração sem significado","Não pode ser analisada criticamente","É sempre idêntica em todas as culturas"],
+   correta:1,
+   explicacao:"A arte é produto social e histórico: expressa e tensiona valores, conflitos e visões de mundo de sua época."},
+  {id:"ef01",disc:"Educação Física",topico:"Esportes e práticas de aventura",nivel:"Fácil",
+   enunciado:"As práticas corporais de aventura na natureza (ex.: trilha, rapel, canoagem) têm como característica comum:",
+   alts:["Ocorrerem apenas em ginásios fechados","Envolverem risco controlado e interação com o meio ambiente","Serem exclusivamente competitivas de alto rendimento","Dispensarem qualquer preparo físico","Serem proibidas em contextos educacionais"],
+   correta:1,
+   explicacao:"Práticas de aventura combinam desafio, risco calculado e contato direto com ambientes naturais."},
+
+  /* ---- LÍNGUA ESTRANGEIRA (geral, leitura) ---- */
+  {id:"le01",disc:"Língua Estrangeira",topico:"Leitura e interpretação de textos curtos",nivel:"Fácil",
+   enunciado:"Em um texto em inglês, a palavra \"however\" geralmente indica:",
+   alts:["Adição de ideia semelhante","Contraste ou oposição","Causa","Exemplificação","Conclusão temporal"],
+   correta:1,
+   explicacao:"\"However\" é um conector de contraste (no entanto / porém)."},
+  {id:"le02",disc:"Língua Estrangeira",topico:"Vocabulário e identificação de informações principais",nivel:"Médio",
+   enunciado:"Ao ler um texto informativo em língua estrangeira, a estratégia mais adequada para localizar a ideia principal é:",
+   alts:["Traduzir palavra por palavra desde a primeira linha","Identificar título, tópico frasal e palavras-chave de coesão","Ignorar o contexto e focar só em verbos","Ler apenas a última frase","Memorizar todas as palavras desconhecidas antes"],
+   correta:1,
+   explicacao:"Título, primeira frase dos parágrafos e conectores ajudam a captar a ideia central sem necessidade de tradução total."},
+
+  /* ---- Mais questões para outras semanas (amostra) ---- */
+  {id:"h07",disc:"História",topico:"Islamismo",nivel:"Fácil",
+   enunciado:"O profeta fundador do Islamismo, segundo a tradição muçulmana, foi:",
+   alts:["Buda","Moisés","Maomé (Muhammad)","Confúcio","Zoroastro"],
+   correta:2,
+   explicacao:"Maomé é o profeta central do Islã; o Alcorão é considerado a revelação recebida por ele."},
+  {id:"m05",disc:"Matemática",topico:"Regra de três simples e composta",nivel:"Médio",
+   enunciado:"Se 4 operários constroem um muro em 6 dias, em quantos dias 6 operários, no mesmo ritmo, construirão o mesmo muro?",
+   alts:["8 dias","9 dias","4 dias","3 dias","12 dias"],
+   correta:2,
+   explicacao:"Grandezas inversamente proporcionais: 4×6 = 6×x → x = 24/6 = 4 dias."},
+  {id:"bio04",disc:"Biologia",topico:"Genética",nivel:"Médio",
+   enunciado:"Em genética mendeliana, a probabilidade de um casal heterozigoto para uma característica autossômica dominante ter um filho recessivo é:",
+   alts:["0%","25%","50%","75%","100%"],
+   correta:1,
+   explicacao:"Cruzamento Aa × Aa → genótipos 1 AA : 2 Aa : 1 aa. Logo 25% aa (recessivo)."},
+  {id:"fil05",disc:"Filosofia",topico:"Ética e teorias éticas",nivel:"Médio",
+   enunciado:"A ética utilitarista, associada a pensadores como Bentham e Mill, considera que a ação moralmente correta é aquela que:",
+   alts:["Segue regras absolutas independentemente das consequências","Produz a maior felicidade (ou utilidade) para o maior número de pessoas","Baseia-se apenas na intenção pura do agente","Prioriza o dever por dever (deontologia kantiana)","Rejeita qualquer cálculo de consequências"],
+   correta:1,
+   explicacao:"O utilitarismo avalia as ações pelas consequências: maximizar o bem-estar coletivo."},
+  {id:"geo06",disc:"Geografia",topico:"Geografia do Piauí: geologia, relevo, clima",nivel:"Médio",
+   enunciado:"O clima predominante no estado do Piauí é:",
+   alts:["Equatorial úmido em todo o território","Tropical semiárido no interior e tropical no litoral/norte","Polar de altitude","Mediterrâneo","Subtropical úmido"],
+   correta:1,
+   explicacao:"O Piauí apresenta clima tropical semiárido em grande parte do interior (sertão) e tropical com maior umidade em áreas do norte e litoral."},
+  {id:"port04",disc:"Português",topico:"Concordância verbal e nominal",nivel:"Médio",
+   enunciado:"Assinale a alternativa em que a concordância verbal está correta:",
+   alts:["Fazem dois anos que ele partiu.","Houveram muitos problemas na reunião.","Existe várias soluções possíveis.","Faz dois anos que ele partiu.","Se viu muitas pessoas na praça."],
+   correta:3,
+   explicacao:"O verbo \"fazer\" indicando tempo decorrido é impessoal e fica no singular: \"Faz dois anos...\"."},
+  {id:"qui04",disc:"Química",topico:"Ligações químicas",nivel:"Médio",
+   enunciado:"A ligação iônica ocorre preferencialmente entre:",
+   alts:["Dois ametais com alta eletronegatividade","Metal e ametal, com transferência de elétrons","Dois metais com compartilhamento de elétrons","Apenas entre gases nobres","Moléculas de água exclusivamente"],
+   correta:1,
+   explicacao:"Ligação iônica: transferência de elétrons de um metal (baixa eletronegatividade) para um ametal (alta eletronegatividade)."},
+  {id:"soc04",disc:"Sociologia",topico:"Cultura",nivel:"Fácil",
+   enunciado:"Em Sociologia, cultura pode ser entendida como:",
+   alts:["Apenas as artes eruditas de uma elite","O conjunto de valores, normas, práticas e significados compartilhados por um grupo","Somente a produção material (objetos)","O DNA de uma população","A religião oficial do Estado"],
+   correta:1,
+   explicacao:"Cultura abrange o universo simbólico e material compartilhado: valores, normas, linguagem, costumes, técnicas etc."}
+];
+
+/* ============================================================
+   ESTADO DA APLICAÇÃO
+   ============================================================ */
+let indiceSemana = 0;
+let diaAtual = 0;
+let modo = "dia";
+let qtdDesejada = 5;
+let fila = [];          // questões da sessão
+let idxAtual = 0;
+let respostasSessao = []; // {id, escolhida, correta, acertou, tempo}
+let inicioSessao = null;
+let timerInterval = null;
+let segundosSessao = 0;
+let historico = [];     // todas as respostas já dadas
+let sessoes = [];       // resumo de sessões
+let errosPendentes = []; // ids de questões erradas ainda não revisadas
+
+const STORAGE_KEY = "ifpi_questoes_historico_v1";
+const STORAGE_SESSOES = "ifpi_questoes_sessoes_v1";
+const STORAGE_ERROS = "ifpi_questoes_erros_v1";
+
+/* ============================================================
+   CÁLCULO DA SEMANA (idêntico ao plano)
+   ============================================================ */
+function getIndiceSemana(data) {
+  const ref = new Date(2026, 8, 21); // 21/09/2026
+  const diffMs = data.getTime() - ref.getTime();
+  const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const diaDaSemana = data.getDay();
+  const diasDesdeSegunda = (diaDaSemana + 6) % 7;
+  const inicioSemana = diffDias - diasDesdeSegunda;
+  const numeroSemana = Math.floor(inicioSemana / 7);
+  return ((numeroSemana % 7) + 7) % 7;
+}
+
+function topicosDaSemanaAtual() {
+  const mapa = {
+    "Português": portPorSemana[indiceSemana],
+    "Literatura": litPorSemana[indiceSemana],
+    "Matemática": matPorSemana[indiceSemana],
+    "Física": fisPorSemana[indiceSemana],
+    "História": histPorSemana[indiceSemana],
+    "Geografia": geoPorSemana[indiceSemana],
+    "Biologia": bioPorSemana[indiceSemana],
+    "Química": quiPorSemana[indiceSemana],
+    "Sociologia": socPorSemana[indiceSemana],
+    "Artes": [artesEfPorSemana[indiceSemana][0]],
+    "Educação Física": [artesEfPorSemana[indiceSemana][1] || artesEfPorSemana[indiceSemana][0]],
+    "Língua Estrangeira": ["Leitura e interpretação de textos curtos","Vocabulário e identificação de informações principais"]
+  };
+  // Filosofia
+  const idxFil = gruposPorSemana[indiceSemana];
+  mapa["Filosofia"] = idxFil.map(i => topicosFilosofia[i]);
+  return mapa;
+}
+
+function topicosDoDia() {
+  const discs = disciplinasDia[diaAtual] || [];
+  const todos = topicosDaSemanaAtual();
+  const resultado = {};
+  discs.forEach(d => {
+    if (todos[d]) resultado[d] = todos[d];
+  });
+  return resultado;
+}
+
+/* ============================================================
+   FILTRO DE QUESTÕES
+   ============================================================ */
+function questoesPorTopicos(mapaDiscTopicos) {
+  const set = new Set();
+  Object.entries(mapaDiscTopicos).forEach(([disc, tops]) => {
+    tops.forEach(t => set.add(disc + "||" + t));
+  });
+  return BANCO.filter(q => set.has(q.disc + "||" + q.topico));
+}
+
+function todasDisciplinas() {
+  return [...new Set(BANCO.map(q => q.disc))].sort();
+}
+
+function topicosDeDisciplina(disc) {
+  return [...new Set(BANCO.filter(q => q.disc === disc).map(q => q.topico))].sort();
+}
+
+function embaralhar(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function selecionarQuestoes() {
+  let pool = [];
+  if (modo === "dia") {
+    if (diaAtual === 0) {
+      pool = []; // domingo: sem conteúdo novo
+    } else if (diaAtual === 6) {
+      // sábado: mistura da semana
+      pool = questoesPorTopicos(topicosDaSemanaAtual());
+    } else {
+      pool = questoesPorTopicos(topicosDoDia());
+    }
+  } else if (modo === "semana") {
+    pool = questoesPorTopicos(topicosDaSemanaAtual());
+  } else if (modo === "disciplina") {
+    const disc = document.getElementById("selDisciplina").value;
+    pool = BANCO.filter(q => q.disc === disc);
+  } else if (modo === "topico") {
+    const disc = document.getElementById("selTopicoDisc").value;
+    const top = document.getElementById("selTopico").value;
+    pool = BANCO.filter(q => q.disc === disc && q.topico === top);
+  } else if (modo === "erros") {
+    const ids = new Set(errosPendentes);
+    pool = BANCO.filter(q => ids.has(q.id));
+  } else if (modo === "simulado") {
+    pool = questoesPorTopicos(topicosDaSemanaAtual());
+    if (pool.length < 5) pool = [...BANCO]; // fallback mínimo
+  }
+
+  if (pool.length === 0) return [];
+
+  // Evitar repetir a última respondida imediatamente (se houver histórico recente)
+  const ultimas = historico.slice(-3).map(h => h.id);
+  let filtrado = pool.filter(q => !ultimas.includes(q.id));
+  if (filtrado.length < Math.min(qtdDesejada, pool.length)) filtrado = pool;
+
+  const embaralhado = embaralhar(filtrado);
+  return embaralhado.slice(0, Math.min(qtdDesejada, embaralhado.length));
+}
+
+/* ============================================================
+   UI — ATUALIZAÇÃO INICIAL
+   ============================================================ */
+function atualizarHeader() {
+  const agora = new Date();
+  diaAtual = agora.getDay();
+  indiceSemana = getIndiceSemana(agora);
+  document.getElementById("headerDate").textContent =
+    "Hoje: " + nomesDias[diaAtual] + ", " + agora.toLocaleDateString("pt-BR");
+  document.getElementById("headerWeek").textContent =
+    "Semana do ciclo: " + (indiceSemana + 1) + "/7 · Prova: 29/11/2026";
+  document.getElementById("badgeDia").textContent = nomesDias[diaAtual].toUpperCase();
+  document.getElementById("tituloDia").textContent = titulosDia[diaAtual];
+  document.getElementById("setupDiaNome").textContent = nomesDias[diaAtual].toLowerCase();
+
+  const topicos = topicosDoDia();
+  let htmlTop = "";
+  if (diaAtual === 0) {
+    document.getElementById("descDia").textContent = "Dia de descanso. Use o modo Revisão de erros ou Questões da semana se quiser praticar levemente.";
+    htmlTop = "<div class='note'>Domingo: no máximo 20–30 min de revisão. Não há conteúdo novo obrigatório.</div>";
+  } else if (diaAtual === 6) {
+    document.getElementById("descDia").textContent = "Dia de simulado progressivo + correção + redação.";
+    htmlTop = "<p><strong>Simulado sugerido:</strong> " + simuladoPorSemana[indiceSemana] + "</p>";
+  } else {
+    const discs = disciplinasDia[diaAtual];
+    document.getElementById("descDia").textContent = "Disciplinas: " + discs.join(", ");
+    htmlTop = "<strong>Tópicos de hoje:</strong><ul style='margin:6px 0 0 18px;font-size:13px'>";
+    Object.entries(topicos).forEach(([d, ts]) => {
+      htmlTop += "<li><strong>" + d + ":</strong> " + ts.join("; ") + "</li>";
+    });
+    htmlTop += "</ul>";
+  }
+  document.getElementById("topicosDoDia").innerHTML = htmlTop;
+
+  // Disponíveis
+  let pool = [];
+  if (diaAtual === 0) pool = [];
+  else if (diaAtual === 6) pool = questoesPorTopicos(topicosDaSemanaAtual());
+  else pool = questoesPorTopicos(topicos);
+  document.getElementById("statDisp").textContent = pool.length;
+
+  // Simulado descrição
+  document.getElementById("simuladoDesc").textContent =
+    "Progressão do plano: " + simuladoPorSemana[indiceSemana] +
+    " · Sugerido hoje: cerca de " + simuladoQtdSugerida[indiceSemana] + " questões.";
+
+  // Qtd padrão por dia
+  if (diaAtual === 5) qtdDesejada = 5; // sexta leve
+  else if (diaAtual === 6) qtdDesejada = simuladoQtdSugerida[indiceSemana];
+  else if (diaAtual === 0) qtdDesejada = 5;
+  else qtdDesejada = 10;
+  document.querySelectorAll("#tabsQtd .tab").forEach(t => {
+    t.classList.toggle("active", Number(t.dataset.qtd) === qtdDesejada || (t.dataset.qtd === "custom" && ![5,10,15,20,30].includes(qtdDesejada)));
+  });
+  if (![5,10,15,20,30].includes(qtdDesejada)) {
+    document.getElementById("qtdCustomWrap").classList.remove("hidden");
+    document.getElementById("qtdCustom").value = qtdDesejada;
+  }
+}
+
+function preencherSelects() {
+  const discs = todasDisciplinas();
+  const selD = document.getElementById("selDisciplina");
+  const selTD = document.getElementById("selTopicoDisc");
+  const filtroD = document.getElementById("filtroErroDisc");
+  selD.innerHTML = discs.map(d => `<option value="${d}">${d}</option>`).join("");
+  selTD.innerHTML = discs.map(d => `<option value="${d}">${d}</option>`).join("");
+  filtroD.innerHTML = `<option value="">Todas disciplinas</option>` + discs.map(d => `<option value="${d}">${d}</option>`).join("");
+  atualizarSelectTopicos();
+}
+
+function atualizarSelectTopicos() {
+  const disc = document.getElementById("selTopicoDisc").value;
+  const tops = topicosDeDisciplina(disc);
+  document.getElementById("selTopico").innerHTML = tops.map(t => `<option value="${t}">${t}</option>`).join("");
+}
+
+/* ============================================================
+   SESSÃO DE QUESTÕES
+   ============================================================ */
+function iniciarSessao() {
+  if (document.getElementById("qtdCustomWrap").classList.contains("hidden") === false) {
+    qtdDesejada = Math.max(1, Math.min(70, Number(document.getElementById("qtdCustom").value) || 10));
+  }
+  fila = selecionarQuestoes();
+  if (fila.length === 0) {
+    document.getElementById("msgSemQuestoes").classList.remove("hidden");
+    return;
+  }
+  document.getElementById("msgSemQuestoes").classList.add("hidden");
+  idxAtual = 0;
+  respostasSessao = [];
+  segundosSessao = 0;
+  inicioSessao = Date.now();
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    segundosSessao++;
+    const t = formatarTempo(segundosSessao);
+    document.getElementById("statTempo").textContent = t;
+    document.getElementById("qTimer").textContent = t;
+  }, 1000);
+
+  document.getElementById("secModos").classList.add("hidden");
+  document.getElementById("areaResultado").classList.add("hidden");
+  document.getElementById("areaDesempenho").classList.add("hidden");
+  document.getElementById("areaCaderno").classList.add("hidden");
+  document.getElementById("areaQuestao").classList.add("active");
+  mostrarQuestao();
+  atualizarStatsSessao();
+}
+
+function formatarTempo(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return String(m).padStart(2, "0") + ":" + String(sec).padStart(2, "0");
+}
+
+function mostrarQuestao() {
+  const q = fila[idxAtual];
+  if (!q) return;
+  document.getElementById("qNum").textContent = "Questão " + (idxAtual + 1) + "/" + fila.length;
+  document.getElementById("qDisc").textContent = q.disc;
+  document.getElementById("qTopico").textContent = q.topico;
+  document.getElementById("qNivel").textContent = q.nivel;
+  document.getElementById("qEnunciado").textContent = q.enunciado;
+  document.getElementById("qProgress").style.width = ((idxAtual) / fila.length * 100) + "%";
+
+  const ja = respostasSessao.find(r => r.id === q.id);
+  const ul = document.getElementById("qAlts");
+  ul.innerHTML = "";
+  const letras = ["A","B","C","D","E"];
+  q.alts.forEach((alt, i) => {
+    const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.className = "alt-btn";
+    btn.type = "button";
+    btn.dataset.idx = i;
+    btn.innerHTML = `<span class="alt-letter">${letras[i]}</span><span>${alt}</span>`;
+    if (ja) {
+      btn.classList.add("disabled");
+      if (i === q.correta) btn.classList.add("correct");
+      if (ja.escolhida === i && !ja.acertou) btn.classList.add("incorrect");
+      if (ja.escolhida === i) btn.classList.add("selected");
+    } else {
+      btn.addEventListener("click", () => selecionarAlt(i));
+    }
+    li.appendChild(btn);
+    ul.appendChild(li);
+  });
+
+  const fb = document.getElementById("qFeedback");
+  fb.className = "feedback";
+  if (ja) {
+    fb.classList.add("show", ja.acertou ? "ok" : "err");
+    document.getElementById("qFeedbackTitulo").textContent = ja.acertou ? "✓ Correto!" : "✗ Incorreto";
+    document.getElementById("qExplicacao").textContent = q.explicacao + " (Resposta correta: " + letras[q.correta] + ")";
+    document.getElementById("btnResponder").classList.add("hidden");
+    document.getElementById("btnProxima").classList.remove("hidden");
+    document.getElementById("btnVerExplicacao").classList.add("hidden");
+  } else {
+    document.getElementById("btnResponder").classList.remove("hidden");
+    document.getElementById("btnProxima").classList.add("hidden");
+    document.getElementById("btnVerExplicacao").classList.add("hidden");
+  }
+
+  document.getElementById("btnAnterior").disabled = idxAtual === 0;
+  document.getElementById("btnPular").disabled = !!ja;
+}
+
+let altSelecionada = null;
+function selecionarAlt(i) {
+  altSelecionada = i;
+  document.querySelectorAll(".alt-btn").forEach((b, idx) => {
+    b.classList.toggle("selected", idx === i);
+  });
+}
+
+function responder() {
+  if (altSelecionada === null) {
+    alert("Selecione uma alternativa antes de responder.");
+    return;
+  }
+  const q = fila[idxAtual];
+  if (respostasSessao.find(r => r.id === q.id)) return;
+
+  const acertou = altSelecionada === q.correta;
+  const registro = {
+    id: q.id,
+    disc: q.disc,
+    topico: q.topico,
+    enunciado: q.enunciado,
+    escolhida: altSelecionada,
+    correta: q.correta,
+    acertou,
+    explicacao: q.explicacao,
+    data: new Date().toISOString(),
+    semana: indiceSemana + 1,
+    modo
+  };
+  respostasSessao.push(registro);
+  historico.push(registro);
+
+  if (!acertou) {
+    if (!errosPendentes.includes(q.id)) errosPendentes.push(q.id);
+  } else {
+    errosPendentes = errosPendentes.filter(id => id !== q.id);
+  }
+
+  salvarLocal();
+  atualizarStatsSessao();
+  mostrarQuestao();
+}
+
+function pular() {
+  if (idxAtual < fila.length - 1) {
+    idxAtual++;
+    altSelecionada = null;
+    mostrarQuestao();
+  } else {
+    finalizarSessao();
+  }
+}
+
+function anterior() {
+  if (idxAtual > 0) {
+    idxAtual--;
+    altSelecionada = null;
+    mostrarQuestao();
+  }
+}
+
+function proxima() {
+  if (idxAtual < fila.length - 1) {
+    idxAtual++;
+    altSelecionada = null;
+    mostrarQuestao();
+  } else {
+    finalizarSessao();
+  }
+}
+
+function atualizarStatsSessao() {
+  const total = respostasSessao.length;
+  const acertos = respostasSessao.filter(r => r.acertou).length;
+  const erros = total - acertos;
+  document.getElementById("statResp").textContent = total;
+  document.getElementById("statAcerto").textContent = acertos;
+  document.getElementById("statErro").textContent = erros;
+  document.getElementById("statPct").textContent = total ? Math.round(acertos / total * 100) + "%" : "—";
+}
+
+function finalizarSessao() {
+  if (timerInterval) clearInterval(timerInterval);
+  document.getElementById("areaQuestao").classList.remove("active");
+  document.getElementById("areaResultado").classList.remove("hidden");
+
+  const total = respostasSessao.length;
+  const acertos = respostasSessao.filter(r => r.acertou).length;
+  const erros = total - acertos;
+  const pct = total ? (acertos / total * 100) : 0;
+  const nota = total ? (acertos / total * 10) : 0;
+
+  document.getElementById("resNota").textContent = nota.toFixed(1).replace(".", ",");
+  document.getElementById("resTotal").textContent = total;
+  document.getElementById("resAcertos").textContent = acertos;
+  document.getElementById("resErros").textContent = erros;
+  document.getElementById("resPct").textContent = Math.round(pct) + "%";
+  document.getElementById("resTempo").textContent = formatarTempo(segundosSessao);
+
+  let msg = "";
+  if (pct >= 90) msg = "Excelente desempenho! Continue assim.";
+  else if (pct >= 70) msg = "Bom desempenho. Revise os pontos de dúvida para consolidar.";
+  else if (pct >= 50) msg = "Continue praticando. Foque nos tópicos com mais erros.";
+  else msg = "É importante revisar os tópicos com mais erros. Use o Caderno de Erros.";
+  document.getElementById("resMsg").textContent = msg;
+
+  // Por disciplina
+  const porDisc = {};
+  respostasSessao.forEach(r => {
+    if (!porDisc[r.disc]) porDisc[r.disc] = {ok:0, total:0};
+    porDisc[r.disc].total++;
+    if (r.acertou) porDisc[r.disc].ok++;
+  });
+  let html = "<h3 style='font-size:14px;margin-bottom:8px'>Por disciplina</h3>";
+  Object.entries(porDisc).forEach(([d, v]) => {
+    const p = Math.round(v.ok / v.total * 100);
+    html += `<div class="chart-bar"><span class="name">${d}</span><div class="bar-bg"><div class="bar-fill" style="width:${p}%"></div></div><span class="pct">${p}%</span></div>`;
+  });
+  document.getElementById("resPorDisc").innerHTML = html;
+
+  // Salvar sessão
+  sessoes.push({
+    data: new Date().toISOString(),
+    semana: indiceSemana + 1,
+    modo,
+    total,
+    acertos,
+    erros,
+    pct: Math.round(pct),
+    nota: Number(nota.toFixed(2)),
+    tempo: segundosSessao,
+    disciplinas: Object.keys(porDisc)
+  });
+  salvarLocal();
+}
+
+/* ============================================================
+   LOCAL STORAGE / EXPORT / IMPORT
+   ============================================================ */
+function salvarLocal() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(historico));
+    localStorage.setItem(STORAGE_SESSOES, JSON.stringify(sessoes));
+    localStorage.setItem(STORAGE_ERROS, JSON.stringify(errosPendentes));
+  } catch (e) { console.warn("localStorage:", e); }
+}
+
+function carregarLocal() {
+  try {
+    historico = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    sessoes = JSON.parse(localStorage.getItem(STORAGE_SESSOES) || "[]");
+    errosPendentes = JSON.parse(localStorage.getItem(STORAGE_ERROS) || "[]");
+  } catch (e) {
+    historico = []; sessoes = []; errosPendentes = [];
+  }
+}
+
+/* ============================================================
+   PAINEL DESEMPENHO E CADERNO
+   ============================================================ */
+function renderDesempenho() {
+  const total = historico.length;
+  const acertos = historico.filter(r => r.acertou).length;
+  document.getElementById("perfTotal").textContent = total;
+  document.getElementById("perfAcertos").textContent = acertos;
+  document.getElementById("perfPct").textContent = total ? Math.round(acertos / total * 100) + "%" : "—";
+  document.getElementById("perfSessoes").textContent = sessoes.length;
+
+  const porDisc = {};
+  historico.forEach(r => {
+    if (!porDisc[r.disc]) porDisc[r.disc] = {ok:0, total:0};
+    porDisc[r.disc].total++;
+    if (r.acertou) porDisc[r.disc].ok++;
+  });
+  let html = "";
+  Object.entries(porDisc).sort((a,b) => a[0].localeCompare(b[0])).forEach(([d, v]) => {
+    const p = Math.round(v.ok / v.total * 100);
+    html += `<div class="chart-bar"><span class="name" title="${d}">${d}</span><div class="bar-bg"><div class="bar-fill" style="width:${p}%"></div></div><span class="pct">${p}%</span></div>`;
+  });
+  document.getElementById("chartDisc").innerHTML = html || "<p class='empty-msg'>Sem dados ainda.</p>";
+
+  // Tópicos com mais erros
+  const errosTop = {};
+  historico.filter(r => !r.acertou).forEach(r => {
+    const k = r.disc + " — " + r.topico;
+    errosTop[k] = (errosTop[k] || 0) + 1;
+  });
+  const sorted = Object.entries(errosTop).sort((a,b) => b[1] - a[1]).slice(0, 8);
+  let htmlE = "";
+  sorted.forEach(([k, n]) => {
+    htmlE += `<div class="chart-bar"><span class="name" title="${k}">${k}</span><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(100, n * 15)}%;background:var(--error)"></div></div><span class="pct">${n}</span></div>`;
+  });
+  document.getElementById("chartErrosTopicos").innerHTML = htmlE || "<p class='empty-msg'>Nenhum erro registrado.</p>";
+
+  // Sessões
+  let htmlS = sessoes.slice(-10).reverse().map(s =>
+    `<div style="padding:6px 0;border-bottom:1px solid var(--border)">${new Date(s.data).toLocaleString("pt-BR")} · Nota ${s.nota.toFixed(1)} · ${s.acertos}/${s.total} (${s.pct}%) · ${s.modo}</div>`
+  ).join("");
+  document.getElementById("listaSessoes").innerHTML = htmlS || "<p class='empty-msg'>Nenhuma sessão ainda.</p>";
+}
+
+function renderCaderno(filtroDisc, filtroTop) {
+  const erros = historico.filter(r => !r.acertou);
+  let lista = erros;
+  if (filtroDisc) lista = lista.filter(r => r.disc === filtroDisc);
+  if (filtroTop) lista = lista.filter(r => r.topico === filtroTop);
+
+  // únicos por id (último erro)
+  const map = {};
+  lista.forEach(r => { map[r.id] = r; });
+  const unicos = Object.values(map).sort((a,b) => new Date(b.data) - new Date(a.data));
+
+  const tops = [...new Set(erros.map(r => r.topico))];
+  const selT = document.getElementById("filtroErroTopico");
+  const cur = selT.value;
+  selT.innerHTML = `<option value="">Todos tópicos</option>` + tops.map(t => `<option value="${t}">${t}</option>`).join("");
+  if (cur) selT.value = cur;
+
+  let html = "";
+  if (unicos.length === 0) {
+    html = "<p class='empty-msg'>Nenhum erro registrado com os filtros atuais.</p>";
+  } else {
+    unicos.forEach(r => {
+      const letras = ["A","B","C","D","E"];
+      const revisado = !errosPendentes.includes(r.id);
+      html += `<div class="erro-item">
+        <div class="erro-meta">${r.disc} · ${r.topico} · ${new Date(r.data).toLocaleDateString("pt-BR")} ${revisado ? '<span class="badge badge-green">Revisado</span>' : '<span class="badge badge-red">Pendente</span>'}</div>
+        <div class="erro-enun">${r.enunciado.substring(0, 180)}${r.enunciado.length > 180 ? "…" : ""}</div>
+        <div style="font-size:13px;margin:6px 0">Você marcou: <strong>${letras[r.escolhida]}</strong> · Correta: <strong>${letras[r.correta]}</strong></div>
+        <div style="font-size:13px;color:var(--muted)">${r.explicacao}</div>
+        <div style="margin-top:8px">
+          <button class="btn btn-sm btn-success" onclick="marcarRevisado('${r.id}')">Marcar como revisado</button>
+        </div>
+      </div>`;
+    });
+  }
+  document.getElementById("listaErros").innerHTML = html;
+}
+
+window.marcarRevisado = function(id) {
+  errosPendentes = errosPendentes.filter(x => x !== id);
+  salvarLocal();
+  renderCaderno(document.getElementById("filtroErroDisc").value, document.getElementById("filtroErroTopico").value);
+};
+
+/* ============================================================
+   EVENTOS
+   ============================================================ */
+document.getElementById("tabsModo").addEventListener("click", (e) => {
+  const tab = e.target.closest(".tab");
+  if (!tab) return;
+  document.querySelectorAll("#tabsModo .tab").forEach(t => t.classList.remove("active"));
+  tab.classList.add("active");
+  modo = tab.dataset.mode;
+  document.querySelectorAll(".setup-panel").forEach(p => p.classList.remove("active"));
+  const map = {dia:"setupDia",semana:"setupSemana",disciplina:"setupDisciplina",topico:"setupTopico",erros:"setupErros",simulado:"setupSimulado"};
+  document.getElementById(map[modo]).classList.add("active");
+  document.getElementById("msgSemQuestoes").classList.add("hidden");
+});
+
+document.getElementById("tabsQtd").addEventListener("click", (e) => {
+  const tab = e.target.closest(".tab");
+  if (!tab) return;
+  document.querySelectorAll("#tabsQtd .tab").forEach(t => t.classList.remove("active"));
+  tab.classList.add("active");
+  if (tab.dataset.qtd === "custom") {
+    document.getElementById("qtdCustomWrap").classList.remove("hidden");
+    qtdDesejada = Number(document.getElementById("qtdCustom").value) || 10;
+  } else {
+    document.getElementById("qtdCustomWrap").classList.add("hidden");
+    qtdDesejada = Number(tab.dataset.qtd);
+  }
+});
+
+document.getElementById("selTopicoDisc").addEventListener("change", atualizarSelectTopicos);
+document.getElementById("btnIniciar").addEventListener("click", iniciarSessao);
+document.getElementById("btnResponder").addEventListener("click", responder);
+document.getElementById("btnProxima").addEventListener("click", proxima);
+document.getElementById("btnAnterior").addEventListener("click", anterior);
+document.getElementById("btnPular").addEventListener("click", pular);
+document.getElementById("btnNovaSessao").addEventListener("click", () => {
+  document.getElementById("areaResultado").classList.add("hidden");
+  document.getElementById("secModos").classList.remove("hidden");
+  atualizarStatsSessao();
+  document.getElementById("statTempo").textContent = "00:00";
+});
+
+document.getElementById("btnPainel").addEventListener("click", () => {
+  document.getElementById("areaDesempenho").classList.remove("hidden");
+  document.getElementById("areaCaderno").classList.add("hidden");
+  document.getElementById("areaQuestao").classList.remove("active");
+  document.getElementById("areaResultado").classList.add("hidden");
+  renderDesempenho();
+});
+document.getElementById("btnFecharPerf").addEventListener("click", () => {
+  document.getElementById("areaDesempenho").classList.add("hidden");
+});
+document.getElementById("btnCaderno").addEventListener("click", () => {
+  document.getElementById("areaCaderno").classList.remove("hidden");
+  document.getElementById("areaDesempenho").classList.add("hidden");
+  document.getElementById("areaQuestao").classList.remove("active");
+  renderCaderno("", "");
+});
+document.getElementById("btnFecharCaderno").addEventListener("click", () => {
+  document.getElementById("areaCaderno").classList.add("hidden");
+});
+document.getElementById("btnFiltrarErros").addEventListener("click", () => {
+  renderCaderno(document.getElementById("filtroErroDisc").value, document.getElementById("filtroErroTopico").value);
+});
+document.getElementById("btnRefazerErros").addEventListener("click", () => {
+  modo = "erros";
+  document.querySelectorAll("#tabsModo .tab").forEach(t => t.classList.toggle("active", t.dataset.mode === "erros"));
+  document.querySelectorAll(".setup-panel").forEach(p => p.classList.remove("active"));
+  document.getElementById("setupErros").classList.add("active");
+  document.getElementById("areaCaderno").classList.add("hidden");
+  document.getElementById("secModos").classList.remove("hidden");
+  qtdDesejada = Math.min(20, errosPendentes.length || 5);
+  iniciarSessao();
+});
+
+document.getElementById("btnLimparHist").addEventListener("click", () => {
+  if (confirm("Apagar todo o histórico local deste navegador?")) {
+    historico = []; sessoes = []; errosPendentes = [];
+    salvarLocal();
+    renderDesempenho();
+  }
+});
+
+document.getElementById("themeToggle").addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  document.getElementById("themeToggle").textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+});
+
+/* Link do plano: tenta caminho relativo comum */
+(function() {
+  const a = document.getElementById("linkPlano");
+  // Se o plano estiver na mesma pasta ou em attachments
+  a.href = "plano.html";
+})();
+
+/* INIT */
+carregarLocal();
+atualizarHeader();
+preencherSelects();
+atualizarStatsSessao();
+</script>
+</body>
+</html>

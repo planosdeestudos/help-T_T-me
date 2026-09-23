@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano de Estudos — IFPI Pedagogia Barras 2027</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033;line-height:1.55}
+header{background:linear-gradient(135deg,#183b72,#2867b2);color:#fff;padding:28px 18px;text-align:center}
+header h1{margin:0 0 8px;font-size:clamp(20px,5vw,36px)}
+header p{margin:4px 0;font-size:15px}
+.nav-home{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:10px 0 0;padding:10px 16px;border:2px solid #fff;border-radius:10px;color:#fff;text-decoration:none;font-weight:700;font-size:14px}
+.container{max-width:980px;margin:auto;padding:16px}
+.today{background:#fff;border-left:6px solid #2867b2;border-radius:14px;padding:18px;margin-bottom:20px;box-shadow:0 5px 18px #0001}
+.badge{display:inline-block;background:#2867b2;color:#fff;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:bold}
+.today h2{margin:10px 0 6px;font-size:20px}
+.horario{background:#eef6ff;border-radius:8px;padding:8px 12px;margin:8px 0;font-size:14px}
+.day{background:#fff;border-radius:14px;padding:18px;margin:14px 0;box-shadow:0 3px 14px #00000010}
+.day.current{outline:3px solid #2867b2}
+.day h2{margin-top:0;font-size:20px}
+.topic{background:#f7f9fc;border-radius:10px;padding:12px;margin:8px 0}
+.topic strong{display:block;margin-bottom:4px}
+.topic ul{margin:6px 0;padding-left:20px;font-size:14px}
+.book{background:#eef6ff;border-left:4px solid #2867b2;padding:10px 12px;border-radius:8px;margin-top:10px;font-size:14px}
+.note{background:#fff8e6;border-left:4px solid #e6a817;padding:12px 14px;border-radius:8px;margin:12px 0;font-size:14px}
+.filosofia-lista{background:#f0f4ff;border-radius:10px;padding:14px;margin-top:12px;font-size:14px}
+.filosofia-lista ol{margin:8px 0;padding-left:22px}
+.semana-atual{background:#e8f5e9;border-left:4px solid #2e7d32;padding:10px 12px;border-radius:8px;margin-top:10px;font-weight:bold}
+.topicos-semana{background:#eef6ff;border-radius:8px;padding:10px 12px;margin-top:8px}
+.topicos-semana li{margin:3px 0}
+.progressao{background:#f0f7f0;border-radius:8px;padding:10px 12px;margin-top:8px;font-size:13px}
+footer{text-align:center;padding:22px;color:#667085;font-size:13px}
+.checklist li{margin:4px 0}
+</style>
+</head>
+<body>
+<header>
+<h1>Plano de Estudos — IFPI Pedagogia Barras 2027</h1>
+<p id="currentDate">Carregando data...</p>
+<p style="font-size:13px;opacity:.9">Prova: 29/11/2026 · 70 questões + Redação · Obras: Beira-rio, Beira-vida e Crônicas Gonzaguianas</p>
+<a class="nav-home" href="index.html">Início</a>
+<a class="nav-home" href="questoes.html">Treino de Questões</a>
+</header>
+
+<main class="container">
+
+<section class="today" id="todayPlan">
+<span class="badge">PLANO DE HOJE</span>
+<h2 id="todayTitle">Carregando plano...</h2>
+<p id="todayTime"></p>
+<div id="todayHorario" class="horario"></div>
+<div id="todayChecklist"></div>
+</section>
+
+<!-- ========== SEGUNDA ========== -->
+<section class="day" data-day="1">
+<h2>🔵 Segunda-feira — Português + Redação + Literatura</h2>
+<div class="note"><strong>Meta diária:</strong> 2h30 a 3h. Foque em interpretação + gramática + produção textual.</div>
+<div class="topic">
+<strong>📘 Língua Portuguesa (conteúdo da semana)</strong>
+<ul id="portTopicos"></ul>
+</div>
+<div class="topic">
+<strong>✍️ Redação</strong>
+<ul>
+<li>Estrutura dissertativo-argumentativa (introdução com tese, desenvolvimento, conclusão).</li>
+<li>Argumentação, coesão, coerência e proposta de intervenção (quando o tema pedir).</li>
+<li>Produção de 1 redação a cada 1–2 semanas + revisão de erros.</li>
+</ul>
+</div>
+<div class="topic">
+<strong>📖 Literatura (conteúdo da semana)</strong>
+<ul id="litTopicos"></ul>
+</div>
+<div class="book"><strong>📚 Obras obrigatórias do edital:</strong><br>
+1. <em>Beira-rio, Beira-vida</em> — Assis Brasil<br>
+2. <em>Crônicas Gonzaguianas: o Nordeste e os outros temas nas músicas do Rei do Baião</em> — Wilson Seraine<br>
+<small>Leia 1 capítulo ou trecho por semana e anote temas, personagens e linguagem.</small></div>
+</section>
+
+<!-- ========== TERÇA ========== -->
+<section class="day" data-day="2">
+<h2>🟢 Terça-feira — Matemática + Física</h2>
+<div class="note"><strong>Meta diária:</strong> 2h30 a 3h. Teoria + exercícios resolvidos + questões.</div>
+<div class="topic">
+<strong>📐 Matemática (conteúdo da semana)</strong>
+<ul id="matTopicos"></ul>
+</div>
+<div class="topic">
+<strong>⚡ Física (conteúdo da semana)</strong>
+<ul id="fisTopicos"></ul>
+</div>
+</section>
+
+<!-- ========== QUARTA ========== -->
+<section class="day" data-day="3">
+<h2>🟡 Quarta-feira — História + Geografia</h2>
+<div class="note"><strong>Meta diária:</strong> 2h30 a 3h. Inclua sempre um trecho de História/Geografia do Piauí.</div>
+<div class="topic">
+<strong>🏛️ História Geral e do Brasil + Piauí (conteúdo da semana)</strong>
+<ul id="histTopicos"></ul>
+</div>
+<div class="topic">
+<strong>🌍 Geografia Geral + Piauí (conteúdo da semana)</strong>
+<ul id="geoTopicos"></ul>
+</div>
+</section>
+
+<!-- ========== QUINTA ========== -->
+<section class="day" data-day="4">
+<h2>🟣 Quinta-feira — Biologia + Química</h2>
+<div class="note"><strong>Meta diária:</strong> 2h30 a 3h. Conceitos + esquemas + questões.</div>
+<div class="topic">
+<strong>🧬 Biologia (conteúdo da semana)</strong>
+<ul id="bioTopicos"></ul>
+</div>
+<div class="topic">
+<strong>🧪 Química (conteúdo da semana)</strong>
+<ul id="quiTopicos"></ul>
+</div>
+</section>
+
+<!-- ========== SEXTA ========== -->
+<section class="day" data-day="5">
+<h2>🟠 Sexta-feira — Filosofia + Sociologia + Língua Estrangeira + Artes/EF (dia mais leve)</h2>
+<div class="note"><strong>✨ Sexta mais leve:</strong> 2h a 2h30 no total. Filosofia = 2 tópicos por semana (ciclo de 7 semanas). Escolha <strong>Inglês OU Espanhol</strong>.</div>
+<div class="topic">
+<strong>📘 Filosofia — 2 tópicos desta semana</strong>
+<p id="filosofiaSemanaTexto">Carregando...</p>
+<div class="semana-atual" id="filosofiaSemanaBadge">—</div>
+<ul class="topicos-semana" id="topicosDaSemana"></ul>
+</div>
+<div class="topic">
+<strong>📕 Sociologia (conteúdo da semana)</strong>
+<ul id="socTopicos"></ul>
+</div>
+<div class="topic">
+<strong>🌎 Língua Estrangeira (Inglês ou Espanhol)</strong>
+<ul>
+<li>Leitura e interpretação de textos curtos.</li>
+<li>Vocabulário e identificação de informações principais.</li>
+<li>20–30 min de prática de leitura + 5 questões.</li>
+</ul>
+</div>
+<div class="topic">
+<strong>🎨 Artes + 🏃 Educação Física (bloco leve 15–25 min)</strong>
+<ul id="artesEfTopicos"></ul>
+</div>
+<div class="book"><strong>📚 Leituras de apoio (opcional):</strong> Platão — <em>A República</em> (trechos) · Émile Durkheim — <em>Educação e Sociologia</em> (trechos)</div>
+<div class="filosofia-lista">
+<strong>📋 Cronograma completo de Filosofia (2 tópicos/semana · ciclo de 7 semanas)</strong>
+<ol id="listaFilosofiaCompleta"></ol>
+</div>
+</section>
+
+<!-- ========== SÁBADO ========== -->
+<section class="day" data-day="6">
+<h2>🔴 Sábado — Simulado + Correção + Redação</h2>
+<div class="note"><strong>Meta:</strong> 2h30 a 3h30. Progressão de questões ao longo das semanas.</div>
+<div class="topic">
+<strong>📝 Simulado (progressão)</strong>
+<ul id="simuladoProg"></ul>
+</div>
+<div class="topic">
+<strong>✅ Correção e caderno de erros</strong>
+<ul>
+<li>Corrigir todas as questões e classificar erros por disciplina/assunto.</li>
+<li>Anotar no caderno de erros o que errou e por quê.</li>
+<li>Revisar os 2–3 assuntos com mais erros da semana.</li>
+</ul>
+</div>
+<div class="topic">
+<strong>✍️ Redação</strong>
+<ul>
+<li>Produzir 1 redação (tema atual ou de provas anteriores) OU revisar uma redação anterior.</li>
+<li>Focar nos critérios do edital: escrita formal, tema/estrutura, coerência e coesão.</li>
+</ul>
+</div>
+</section>
+
+<!-- ========== DOMINGO ========== -->
+<section class="day" data-day="0">
+<h2>⚪ Domingo — Descanso + Revisão leve</h2>
+<div class="note"><strong>Meta:</strong> no máximo 30 minutos. Priorize descanso real.</div>
+<div class="topic">
+<strong>🔁 Revisão leve</strong>
+<ul>
+<li>20–30 min: reler anotações, flashcards ou o caderno de erros.</li>
+<li>Organizar material e cronograma da semana seguinte.</li>
+<li>Não fazer simulado nem estudar conteúdo novo.</li>
+</ul>
+</div>
+<div class="book"><strong>📚 Leitura leve (opcional):</strong> Rubem Alves — <em>A Alegria de Ensinar</em> (trechos)</div>
+</section>
+
+</main>
+
+<footer>
+IFPI Pedagogia Barras 2027 — Plano progressivo por semanas · Filosofia: 2 tópicos/sexta (ciclo 7 semanas) · 70 questões + Redação · Obras obrigatórias do edital
+</footer>
+
+<script>
+/* ========== FILOSOFIA (13 tópicos · 7 semanas) ========== */
+const topicosFilosofia = [
+  "Introdução ao conhecimento filosófico",
+  "Desenvolvimento da Filosofia na Grécia Antiga",
+  "Principais escolas de pensamento gregas",
+  "História da Filosofia",
+  "Desenvolvimento da racionalidade humana",
+  "Ética e teorias éticas",
+  "Filosofia política",
+  "Direitos humanos",
+  "Teorias políticas",
+  "Teoria do conhecimento",
+  "Desenvolvimento do conhecimento científico",
+  "A questão do método",
+  "Ciência, sociedade e valores"
+];
+const gruposPorSemana = [[0,1],[2,3],[4,5],[6,7],[8,9],[10,11],[12]];
+
+/* ========== CONTEÚDOS PROGRESSIVOS POR SEMANA (ciclo 7) ========== */
+const portPorSemana = [
+  ["Interpretação e compreensão de textos","Ideias principais e secundárias","Gêneros textuais"],
+  ["Intertextualidade","Semântica","Classes de palavras (substantivo, adjetivo, verbo)"],
+  ["Morfologia","Sintaxe (sujeito, predicado, complementos)","Coordenação e subordinação"],
+  ["Colocação pronominal","Concordância verbal e nominal","Regência verbal e nominal"],
+  ["Crase","Ortografia","Pontuação"],
+  ["Conectores","Coesão e coerência","Texto dissertativo-argumentativo (revisão)"],
+  ["Revisão geral de interpretação + gramática","Prática de questões mistas","Correção de erros frequentes"]
+];
+const litPorSemana = [
+  ["Conceitos de literatura","Gêneros literários","Trovadorismo e Humanismo"],
+  ["Classicismo","Quinhentismo / Literatura de informação e jesuítica","Arcadismo"],
+  ["Romantismo","Realismo","Naturalismo"],
+  ["Parnasianismo","Simbolismo","Pré-Modernismo"],
+  ["Modernismo e Semana de Arte Moderna","1ª geração modernista","2ª geração modernista"],
+  ["Geração de 45","Literatura contemporânea","Literatura piauiense (visão geral)"],
+  ["Revisão das escolas literárias","Leitura dirigida das obras obrigatórias","Questões de literatura"]
+];
+const matPorSemana = [
+  ["Razão e proporção","Unidades de medida","Porcentagem"],
+  ["Divisão proporcional","Regra de três simples e composta","Ordem de grandeza e notação científica"],
+  ["Juros simples e compostos","Taxas e índices","Progressão Aritmética (PA)"],
+  ["Progressão Geométrica (PG)","Função de 1º grau","Função de 2º grau"],
+  ["Função definida por partes","Função exponencial e logarítmica","Estatística descritiva"],
+  ["Análise combinatória","Probabilidade","Geometria plana (áreas e perímetros)"],
+  ["Geometria espacial","Geometria analítica e sistemas","Trigonometria básica + revisão"]
+];
+const fisPorSemana = [
+  ["Grandezas e unidades / Sistema Internacional","Cinemática (MRU e MRUV)"],
+  ["Dinâmica e Leis de Newton","Força, massa e aceleração"],
+  ["Hidrostática","Trabalho e energia"],
+  ["Termodinâmica (calor e temperatura)","Ondas"],
+  ["Óptica","Eletricidade (circuitos básicos)"],
+  ["Eletromagnetismo (noções)","Revisão de cinemática e dinâmica"],
+  ["Revisão geral de Física + questões mistas"]
+];
+const histPorSemana = [
+  ["Pré-História e Antiguidade","Civilizações antigas","Feudalismo"],
+  ["Islamismo","Renascimento","Absolutismo e Reformas religiosas"],
+  ["África e Ásia","Expansão marítima","América e Brasil Colônia"],
+  ["Povos indígenas e africanos na América","Iluminismo","Revolução Industrial e Francesa"],
+  ["Independências e Brasil Império","Primeira República","1ª e 2ª Guerras Mundiais + Crise de 1929"],
+  ["Era Vargas","Guerra Fria e Ditadura Militar","Redemocratização e Nova República"],
+  ["Brasil no século XXI","História do Piauí (primeiros vestígios, colônia, independência, República)","Revisão"]
+];
+const geoPorSemana = [
+  ["Espaço geográfico e cartografia","Sociedade e natureza","Atividades produtivas"],
+  ["Industrialização e urbanização","Ruralidades e energia","Meio ambiente"],
+  ["Globalização e geopolítica","Blocos econômicos e organizações internacionais","Conflitos étnicos/nacionalistas"],
+  ["População e migrações","Geografia do Piauí: geologia, relevo, clima","Hidrografia e vegetação do Piauí"],
+  ["Questões ambientais do Piauí","Estrutura agrária e produção","Territórios tradicionais, quilombolas e indígenas"],
+  ["Políticas públicas e dinâmica socioeconômica","Grãos, serviços e turismo","Cidades do Piauí"],
+  ["Revisão de Geografia Geral + Piauí","Questões mistas"]
+];
+const bioPorSemana = [
+  ["Origem da vida e seres vivos","Bases moleculares da vida","Citologia"],
+  ["Histologia","Anatomofisiologia e reprodução","Anatomia humana básica"],
+  ["Genética","Reino animal","Evolução"],
+  ["Saúde e vírus","Ecologia (cadeias e teias)","Relações ecológicas"],
+  ["Biodiversidade e biomas","Impactos ambientais","Revisão de citologia e genética"],
+  ["Revisão de evolução e ecologia","Questões de Biologia"],
+  ["Revisão geral de Biologia"]
+];
+const quiPorSemana = [
+  ["Conceitos fundamentais e propriedades da matéria","Modelos atômicos","Tabela periódica"],
+  ["Ligações químicas","Reações químicas","Funções inorgânicas"],
+  ["Leis químicas e cálculos","Estequiometria","Gases e soluções"],
+  ["Propriedades coligativas","Termoquímica e cinética","Equilíbrio químico"],
+  ["Eletroquímica e radioatividade","Química orgânica (introdução)","Isomeria e estereoquímica"],
+  ["Reações orgânicas e polímeros","Compostos orgânicos biológicos","Revisão"],
+  ["Revisão geral de Química + questões"]
+];
+const socPorSemana = [
+  ["Surgimento da Sociologia","Tipos de conhecimento","Métodos de pesquisa"],
+  ["Cultura","Indivíduo e sociedade","Sociedade de consumo"],
+  ["Sustentabilidade e indústria cultural","Meio ambiente e racismo ambiental","Estado e neoliberalismo"],
+  ["Globalização e trabalho","Desigualdades e movimentos sociais","Capitalismo e cidadania"],
+  ["Violência e políticas afirmativas","Formação social, econômica e cultural do Brasil","Sistema político e eleitoral"],
+  ["Estado e governo","Revisão de cultura e desigualdades","Questões de Sociologia"],
+  ["Revisão geral de Sociologia"]
+];
+const artesEfPorSemana = [
+  ["Conceitos de arte e arte e sociedade","Esportes e práticas de aventura"],
+  ["Linguagens artísticas e leitura visual","Jogos e ginástica"],
+  ["História da arte e estética","Dança e lutas"],
+  ["Diversidade e técnicas/tecnologia","Saúde e exercício físico"],
+  ["Identidade e análise de objetos artísticos","Patologias e desempenho"],
+  ["Revisão de artes","Políticas públicas e padrões de beleza/diversidade"],
+  ["Revisão leve de Artes + Educação Física"]
+];
+const simuladoPorSemana = [
+  "20–30 questões (mistura de disciplinas da semana) + 1 redação (se possível)",
+  "25–35 questões + correção detalhada",
+  "30–40 questões",
+  "40–50 questões",
+  "50–60 questões",
+  "55–65 questões (aproximar do formato real)",
+  "Simulado completo ou quase completo (próximo de 70 questões) + redação"
+];
+
+/* ========== CÁLCULO DA SEMANA ========== */
+function getIndiceSemana(data) {
+  const ref = new Date(2026, 8, 21); // 21/09/2026 = segunda = semana 0
+  const diffMs = data.getTime() - ref.getTime();
+  const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const diaDaSemana = data.getDay();
+  const diasDesdeSegunda = (diaDaSemana + 6) % 7;
+  const inicioSemana = diffDias - diasDesdeSegunda;
+  const numeroSemana = Math.floor(inicioSemana / 7);
+  return ((numeroSemana % 7) + 7) % 7;
+}
+
+const agora = new Date();
+const dia = agora.getDay();
+const indiceSemana = getIndiceSemana(agora);
+const indicesTopicos = gruposPorSemana[indiceSemana];
+const topicosDaSemana = indicesTopicos.map(i => topicosFilosofia[i]);
+const numeroSemanaExibicao = indiceSemana + 1;
+const nomes = ["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
+
+const textoTopicos = topicosDaSemana.length === 1
+  ? "«" + topicosDaSemana[0] + "»"
+  : "«" + topicosDaSemana[0] + "» e «" + topicosDaSemana[1] + "»";
+
+/* ========== HORÁRIOS E TAREFAS DO DIA ========== */
+const planos = {
+  0: {
+    nome: "Domingo — Descanso + Revisão leve",
+    horario: "20–30 min no máximo",
+    tarefas: [
+      "Revisar anotações, flashcards ou caderno de erros (20–30 min).",
+      "Organizar material e cronograma da próxima semana.",
+      "Descansar de verdade — não estudar conteúdo novo."
+    ]
+  },
+  1: {
+    nome: "Segunda-feira — Português + Redação + Literatura",
+    horario: "08:00–09:00 Português · 09:00–09:50 Redação · 09:50–10:30 Literatura / questões",
+    tarefas: [
+      "Estudar os tópicos de Português da semana.",
+      "Praticar estrutura de redação (tese, argumentos, conclusão).",
+      "Ler trecho das obras obrigatórias ou do tópico de Literatura da semana.",
+      "Fazer 8–12 questões e anotar erros."
+    ]
+  },
+  2: {
+    nome: "Terça-feira — Matemática + Física",
+    horario: "08:00–09:15 Matemática · 09:15–10:15 Física · 10:15–10:40 questões",
+    tarefas: [
+      "Estudar os tópicos de Matemática da semana (teoria + exemplos).",
+      "Estudar os tópicos de Física da semana.",
+      "Resolver 10–15 questões no total e registrar erros."
+    ]
+  },
+  3: {
+    nome: "Quarta-feira — História + Geografia",
+    horario: "08:00–09:15 História · 09:15–10:15 Geografia · 10:15–10:40 questões",
+    tarefas: [
+      "Estudar História Geral/Brasil + trecho de História do Piauí da semana.",
+      "Estudar Geografia Geral + Geografia do Piauí da semana.",
+      "Resolver 8–12 questões e anotar dificuldades."
+    ]
+  },
+  4: {
+    nome: "Quinta-feira — Biologia + Química",
+    horario: "08:00–09:15 Biologia · 09:15–10:15 Química · 10:15–10:40 questões",
+    tarefas: [
+      "Estudar os tópicos de Biologia da semana.",
+      "Estudar os tópicos de Química da semana.",
+      "Resolver 10–15 questões e registrar erros."
+    ]
+  },
+  5: {
+    nome: "Sexta-feira — Filosofia + Sociologia + LE + Artes/EF (leve)",
+    horario: "08:00–08:50 Filosofia · 08:50–09:30 Sociologia · 09:30–10:00 LE · 10:00–10:20 Artes/EF",
+    tarefas: [
+      "Estudar os 2 tópicos de Filosofia da semana: " + textoTopicos + ".",
+      "Estudar o tópico de Sociologia da semana.",
+      "Fazer leitura/interpretação em Inglês ou Espanhol (20–30 min).",
+      "Bloco leve de Artes + Educação Física (15–25 min).",
+      "Resolver algumas questões e anotar pontos de dificuldade."
+    ]
+  },
+  6: {
+    nome: "Sábado — Simulado + Correção + Redação",
+    horario: "08:00–10:00 Simulado · 10:00–11:00 Correção · 11:00–11:40 Redação ou revisão",
+    tarefas: [
+      "Fazer o simulado da semana (ver progressão abaixo).",
+      "Corrigir todas as questões e classificar erros.",
+      "Atualizar o caderno de erros.",
+      "Produzir ou revisar 1 redação (critérios do edital).",
+      "Revisar os assuntos com maior número de erros."
+    ]
+  }
+};
+
+/* ========== PREENCHIMENTO DINÂMICO ========== */
+document.getElementById("currentDate").textContent =
+  "Hoje: " + nomes[dia] + ", " + agora.toLocaleDateString("pt-BR") +
+  " · Semana de Filosofia " + numeroSemanaExibicao + "/7";
+
+document.getElementById("todayTitle").textContent = planos[dia].nome;
+document.getElementById("todayTime").textContent =
+  dia === 5
+    ? "Filosofia da semana: " + topicosDaSemana.join(" + ")
+    : "Conteúdo progressivo da semana " + numeroSemanaExibicao + " do ciclo.";
+document.getElementById("todayHorario").textContent = "⏱ " + planos[dia].horario;
+document.getElementById("todayChecklist").innerHTML =
+  "<ul class='checklist'>" + planos[dia].tarefas.map(t => "<li>" + t + "</li>").join("") + "</ul>";
+
+document.querySelectorAll(".day").forEach(sec => {
+  if (Number(sec.dataset.day) === dia) sec.classList.add("current");
+});
+
+/* Preenche listas de conteúdo da semana */
+function preencherLista(id, arraySemana) {
+  const ul = document.getElementById(id);
+  if (!ul) return;
+  arraySemana[indiceSemana].forEach(t => {
+    const li = document.createElement("li");
+    li.textContent = t;
+    ul.appendChild(li);
+  });
+}
+preencherLista("portTopicos", portPorSemana);
+preencherLista("litTopicos", litPorSemana);
+preencherLista("matTopicos", matPorSemana);
+preencherLista("fisTopicos", fisPorSemana);
+preencherLista("histTopicos", histPorSemana);
+preencherLista("geoTopicos", geoPorSemana);
+preencherLista("bioTopicos", bioPorSemana);
+preencherLista("quiTopicos", quiPorSemana);
+preencherLista("socTopicos", socPorSemana);
+preencherLista("artesEfTopicos", artesEfPorSemana);
+
+document.getElementById("simuladoProg").innerHTML =
+  "<li><strong>Esta semana:</strong> " + simuladoPorSemana[indiceSemana] + "</li>" +
+  "<li>Progressão: início 20–30 → depois 40–50 → intermediário 50–60 → reta final ≈70 questões.</li>";
+
+/* Filosofia */
+document.getElementById("filosofiaSemanaTexto").textContent =
+  "Estude com calma os tópicos desta semana. Na próxima sexta você avança no ciclo.";
+document.getElementById("filosofiaSemanaBadge").textContent =
+  "Semana " + numeroSemanaExibicao + " de 7";
+const ulTopicos = document.getElementById("topicosDaSemana");
+topicosDaSemana.forEach(t => {
+  const li = document.createElement("li");
+  li.textContent = t;
+  ulTopicos.appendChild(li);
+});
+const listaOl = document.getElementById("listaFilosofiaCompleta");
+gruposPorSemana.forEach((grupo, semIdx) => {
+  const li = document.createElement("li");
+  const nomesTopicos = grupo.map(i => topicosFilosofia[i]).join(" + ");
+  li.textContent = "Semana " + (semIdx + 1) + ": " + nomesTopicos;
+  if (semIdx === indiceSemana) {
+    li.style.fontWeight = "bold";
+    li.style.color = "#183b72";
+    li.textContent += "  ← semana atual";
+  }
+  listaOl.appendChild(li);
+});
+</script>
+</body>
+</html>
